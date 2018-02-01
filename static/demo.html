@@ -84,27 +84,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       // }
     </script>
 
-    <script>
-      (function(d, c, g, n, o, t, i, f, y) {
-        f = d['DCG'] = d['DCG'] || {};
-        f[o] = f[o] || function() {
-          (f[o].q = f[o].q || []).push(arguments)
-        },
-        t = c.createElement(g),
-        i = c.getElementsByTagName(g)[0];
-        t.async = 1;
-        t.src = n;
-        i.parentNode.insertBefore(t, i)
-      })(window, document, 'script', '//127.0.0.1:3001/static/widget.js', 'notification');
-
-      DCG.debug = true;
-      DCG.notification('create', 'core', {
-        id: 23,
-        name: 'John Doe',
-        email: 'johndoe@foo.com'
-      });
-    </script>
-
     <!-- Load webcomponents-loader.js to check and load any polyfills your browser needs -->
 
     <!-- Load your application shell -->
@@ -139,5 +118,26 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       Please enable JavaScript to view this website.
     </noscript>
     <!-- Built with love using Polymer Starter Kit -->
+	
+	<script>
+      (function(d, c, g, n, o, t, i, f, y) {
+        f = d['DCG'] = d['DCG'] || {};
+        f[o] = f[o] || function() {
+          (f[o].q = f[o].q || []).push(arguments)
+        },
+        t = c.createElement(g),
+        i = c.getElementsByTagName(g)[0];
+        t.async = 1;
+        t.src = n;
+        i.parentNode.insertBefore(t, i)
+      })(window, document, 'script', '//127.0.0.1:3001/static/widget.js', 'notification');
+
+      DCG.debug = true;
+      DCG.notification('create', 'core', {
+        id: 23,
+        name: 'John Doe',
+        email: 'johndoe@foo.com'
+      });
+    </script>
   </body>
   </html>

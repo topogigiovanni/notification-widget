@@ -60,10 +60,15 @@
 					log('from cache');
 					return self._requestCache[name];
 				}
-
+				
+				data.complete = () => {
+					self._requestCache[name] = null;
+				}
+				
 				var req = self._requestCache[name] = ajax(data);
 
-				return req
+				return req;
+				/*
 					.then((r) => {
 						self._requestCache[name] = null;
 						return r;
@@ -71,7 +76,7 @@
 					.catch((er) => {
 						self._requestCache[name] = null;
 						return er;
-					});
+					});*/
 			},
 			getNotifications: function() {
 				let self = this;
@@ -506,8 +511,8 @@
 		// type: "timeout", "error", "abort", "parsererror"
 		function ajaxError(error, type, xhr, settings) {
 			var context = settings.context
-			settings.error.call(context, xhr, type, error)
-			settings.deferred.reject(error)
+			settings.error.call(context, xhr, type, error || {})
+			settings.deferred.reject(error || {})
 			triggerGlobal(settings, context, 'ajaxError', [xhr, settings, error])
 			ajaxComplete(type, xhr, settings)
 		}
@@ -695,6 +700,8 @@
 	}
 
 	function __construct() {
+		window.Polymer = window.Polymer || {rootPath: '/'};
+
 		_polyfills();
 		_registerDeferred();
 		_registerAjax();
