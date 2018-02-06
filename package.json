@@ -1,21 +1,23 @@
 {
-  "name": "dcg-notification-widget",
-  "license": "BSD-3-Clause",
-  "devDependencies": {
-    "eslint": "^3.19.0",
-    "eslint-config-google": "^0.7.0",
-    "eslint-plugin-html": "^2.0.0"
-  },
-  "scripts": {
-    "start": "node server",
-    "serve": "polymer serve --port 3002",
-    "lint": "npm run lint:javascript && polymer lint",
-    "lint:javascript": "eslint . --ext js,html --ignore-path .gitignore",
-    "test": "polymer test",
-    "test:integration": "polymer build # test that psk builds without error with the CLI"
-  },
-  "dependencies": {
-    "cors": "^2.8.4",
-    "express": "^4.16.2"
-  }
+	"name": "dcg-notification-widget",
+	"license": "BSD-3-Clause",
+	"author": "Giovanni Mansueto <Core@Squad>",
+	"devDependencies": {
+		"eslint": "^3.19.0",
+		"eslint-config-google": "^0.7.0",
+		"eslint-plugin-html": "^2.0.0"
+	},
+	"scripts": {
+		"start": "node server",
+		"serve": "polymer serve --port 3002",
+		"lint": "npm run lint:javascript && polymer lint",
+		"lint:javascript": "eslint . --ext js,html --ignore-path .gitignore",
+		"test": "polymer test",
+		"test:integration": "polymer build # test that psk builds without error with the CLI"
+	},
+	"dependencies": {
+		"cors": "^2.8.4",
+		"dotenv": "^5.0.0",
+		"express": "^4.16.2"
+	}
 }
