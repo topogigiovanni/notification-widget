@@ -69,6 +69,16 @@
 				data.url = self._buildUrl(data.url)
 				data.dataType = 'json';
 
+				let _data = data.data || {};
+
+				// data.data = {
+				// 	data: sha1(JSON.stringify(_data))
+				// }
+
+				data.data = `d=${sha1(JSON.stringify(_data))}`
+
+				log('data', data)
+
 				var req = self._requestCache[name] = ajax(data);
 
 				return req;
@@ -94,7 +104,7 @@
 				// 		console.log('r then', r);
 				// 	});
 				return this._buildRequest('getNotifications', {
-					url: 'api/posts/published'
+					url: 'api/widget/data'
 				});
 			},
 			_register: function() {
@@ -306,9 +316,9 @@
 		//https://github.com/hookflash/obsolete.cifre/blob/master/sha1.js
 		(
 			(function(m) {
-				sha1 = m();
+				let _sha1 = m()
 
-				sha1.tohex = function tohex(array) {
+				_sha1.tohex = function tohex(array) {
 					var string = "";
 					array = ensureArray(array);
 					for (var i = 0, l = array.length; i < l; i++) {
@@ -317,7 +327,7 @@
 					return string;
 				}
 
-				sha1.stringToArray = function stringToArray(string) {
+				_sha1.stringToArray = function stringToArray(string) {
 					// UTF-8 encode the string using one character per byte
 					string = unescape(encodeURIComponent(string));
 					var length = string.length;
@@ -326,6 +336,10 @@
 						arr[i] = string.charCodeAt(i);
 					}
 					return arr;
+				}
+
+				sha1 = (input) => {
+					return _sha1.tohex(_sha1(_sha1.stringToArray(input)));
 				}
 			})
 		)(function() {
