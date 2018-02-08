@@ -7,7 +7,7 @@
 		q: []
 	}
 
-	const debug = !!DCG.debug;
+	const debug = !!DCG.debug
 
 	let Deferred;
 	let ajax = {}
@@ -18,18 +18,20 @@
 	const _actions = {
 		create: (platform, user) => {
 			if (state.created) {
-				console.error('"create" action already executed');
-				return false;
+				console.error('"create" action already executed')
+				return false
 			}
+
+			state.created = true
 
 			log('create', platform, user)
 
 			sessionData = {
 				platform,
 				user
-			};
+			}
 
-			return true;
+			return true
 		},
 		getService: (name = 'api') => {
 			if (typeof name !== 'string') {
@@ -45,7 +47,6 @@
 		}
 	}
 
-	// ** Services
 	const _services = {
 		api: {
 			_public: true,
@@ -174,8 +175,7 @@
 				await this.loadScript(_buildUrl('bower_components/webcomponentsjs/webcomponents-loader.js'));
 			}
 		}
-	};
-	// **
+	}
 
 	function log() {
 		if (!debug) return;
@@ -194,6 +194,24 @@
 	}
 
 	function _polyfills() {
+		// console
+		(function(root) {
+			if (!root.console) {
+				root.console = {};
+			}
+			var con = root.console;
+			var prop, method;
+			var dummy = function() {};
+			var properties = ['memory'];
+			var methods = ('assert,clear,count,debug,dir,dirxml,error,exception,group,' +
+				'groupCollapsed,groupEnd,info,log,markTimeline,profile,profiles,profileEnd,' +
+				'show,table,time,timeEnd,timeline,timelineEnd,timeStamp,trace,warn').split(',');
+			while (prop = properties.pop())
+				if (!con[prop]) con[prop] = {};
+			while (method = methods.pop())
+				if (!con[method]) con[method] = dummy;
+		})(window);
+
 		// btoa
 		(function(root) {
 
