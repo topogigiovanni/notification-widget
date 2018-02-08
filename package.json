@@ -9,7 +9,7 @@
 	},
 	"scripts": {
 		"start": "node server",
-		"serve": "polymer serve --port 3002",
+		"demo": "polymer serve --port 3002",
 		"lint": "npm run lint:javascript && polymer lint",
 		"lint:javascript": "eslint . --ext js,html --ignore-path .gitignore",
 		"test": "polymer test",
@@ -18,6 +18,8 @@
 	"dependencies": {
 		"cors": "^2.8.4",
 		"dotenv": "^5.0.0",
-		"express": "^4.16.2"
+		"express": "^4.16.2",
+		"polymer": "^0.5.0",
+		"polymer-cli": "^1.6.0"
 	}
 }
