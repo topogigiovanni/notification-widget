@@ -39,7 +39,7 @@
 				return;
 			}
 
-			if (!_services[name] || !_services[name]._public) {
+			if (!_services[name] || !_services[name].isPublic()) {
 				return;
 			}
 
@@ -47,112 +47,140 @@
 		}
 	}
 
+	const _baseService = (context, isPublic) => {
+		context.isPublic = () => {
+			return isPublic
+		}
+
+		context._register = () => {}
+
+		return context
+	}
 	const _services = {
-		api: {
-			_public: true,
-			_requestCache: [],
-			_buildUrl: function(url) {
-				let host = debug ? 'http://localhost:8000/' : 'http://localhost:8000/';
-				return host + url;
-			},
-			_buildRequest: function(name, data) {
-				var self = this;
-				if (self._requestCache[name]) {
-					log('from cache');
-					return self._requestCache[name];
+		api: (function() {
+			let props = {}
+			let isPublic = true
+
+			const api = {
+				_requestCache: [],
+				_buildUrl: function(url) {
+					let host = debug ? 'http://localhost:8000/' : 'http://localhost:8000/';
+					return host + url;
+				},
+				_buildRequest: function(name, data) {
+					var self = this;
+					if (self._requestCache[name]) {
+						log('from cache');
+						return self._requestCache[name];
+					}
+
+					data.complete = () => {
+						self._requestCache[name] = null;
+					}
+					data.url = self._buildUrl(data.url)
+					data.dataType = 'json';
+					data.headers = data.headers || {};
+					data.headers['X-DCG-Notify-Trusted'] = 'true';
+
+					let _data = data.data || sessionData;
+
+					if (_data) {
+						data.data = `d=${_encode(_data)}`
+					}
+
+					var req = self._requestCache[name] = ajax(data);
+
+					return req;
 				}
+			};
 
-				data.complete = () => {
-					self._requestCache[name] = null;
-				}
-				data.url = self._buildUrl(data.url)
-				data.dataType = 'json';
-				data.headers = data.headers || {};
-				data.headers['X-DCG-Notify-Trusted'] = 'true';
+			// public
+			props = _baseService(props, isPublic)
 
-				let _data = data.data || sessionData;
-
-				if (_data) {
-					data.data = `d=${_encode(_data)}`
-				}
-
-				var req = self._requestCache[name] = ajax(data);
-
-				return req;
-			},
-			getNotifications: function() {
-				return this._buildRequest('getNotifications', {
+			props.getNotifications = function getNotifications() {
+				return api._buildRequest('getNotifications', {
 					url: 'api/widget/data'
 				});
-			},
-			_register: function() {
-
 			}
-		},
-		resolver: {
-			_public: false,
-			_resolvePreRegistered: function() {
 
-				var self = this;
-				var notification = DCG.notification;
+			return props
+		})(),
+		resolver: (function() {
+			let props = {}
+			let isPublic = false
 
-				if (notification &&
-					notification.q &&
-					Array.isArray(notification.q) &&
-					notification.q.length
-				) {
+			const resolver = {
+				_resolvePreRegistered: function() {
 
-					notification.q.forEach((event) => {
-						self.handle(event);
-					})
+					var self = this;
+					var notification = DCG.notification;
 
+					if (notification &&
+						notification.q &&
+						Array.isArray(notification.q) &&
+						notification.q.length
+					) {
+
+						notification.q.forEach((event) => {
+							self.handle(event);
+						})
+
+					}
+
+				},
+				_bindAction: function(eventName, data) {
+
+					log('bindAction', arguments);
+
+					if (!_actions[eventName]) return;
+
+					return _actions[eventName].apply(_actions, data);
+
+				},
+				handle: function(bag) {
+					var command;
+					var args;
+
+					if (bag && typeof bag === 'string') {
+
+						command = bag
+						args = Array.prototype.slice.call(arguments, 1)
+
+						return resolver._bindAction(command, args)
+
+					} else if (bag && typeof bag === 'object' && bag.length) {
+
+						return resolver.handle.apply(this, bag)
+
+					} else {
+
+						console.error(`Invalid parameter, the first parameter of DCG.notification('string', ... args) method must be a string.`);
+
+						return;
+
+					}
 				}
 
-			},
-			_bindAction: function(eventName, data) {
-
-				log('bindAction', arguments);
-
-				if (!_actions[eventName]) return;
-
-				return _actions[eventName].apply(_actions, data);
-
-			},
-			handle: function(bag) {
-
-				var command;
-				var args;
-
-				if (bag && typeof bag === 'string') {
-
-					command = bag;
-					args = Array.prototype.slice.call(arguments, 1);
-
-					return _services.resolver._bindAction(command, args);
-
-				} else if (bag && typeof bag === 'object' && bag.length) {
-
-					return this.handle.apply(this, bag);
-
-				} else {
-
-					console.error(`Invalid parameter, the first parameter of DCG.notification('string', ... args) method must be a string.`);
-
-					return;
-
-				}
-
-			},
-			_register: function() {
-
-				this._resolvePreRegistered();
-				DCG.notification = this.handle;
-
 			}
-		},
-		assetLoader: {
-			_public: false,
-			loadScript: function(src) {
+
+			// public
+			props = _baseService(props, isPublic)
+
+			props._register = function _register() {
+				resolver._resolvePreRegistered()
+				DCG.notification = resolver.handle
+			}
+
+			return props
+		})(),
+		assetLoader: (function() {
+			let props = {}
+			let isPublic = false
+
+			// public
+			props = _baseService(props, isPublic)
+
+			props.loadScript = function loadScript(src) {
 				var s = 'script';
 				var script = document.createElement(s);
 				var parent = document.getElementsByTagName(s)[0];
@@ -160,21 +188,25 @@
 				script.src = src;
 
 				return parent.parentNode.insertBefore(script, parent);
-			},
-			loadWidget: function(href) {
+			}
+
+			props.loadWidget = function loadWidget(href) {
 				var link = document.createElement('link');
 				var parent = document.getElementsByTagName('body')[0];
 				link.rel = 'import';
 				link.href = href;
 
 				return parent.parentNode.insertBefore(link, parent);
-			},
-			_register: async function() {
-				// await this.loadWidget(_buildUrl('src/my-app.html'));
-				await this.loadWidget(_buildUrl('src/widgets.html'));
-				await this.loadScript(_buildUrl('bower_components/webcomponentsjs/webcomponents-loader.js'));
 			}
-		}
+
+			props._register = function _register() {
+				// await this.loadWidget(_buildUrl('src/my-app.html'));
+				props.loadWidget(_buildUrl('src/widgets.html'));
+				props.loadScript(_buildUrl('bower_components/webcomponentsjs/webcomponents-loader.js'));
+			}
+
+			return props
+		})()
 	}
 
 	function log() {
@@ -687,7 +719,6 @@
 
 	function _registerServices() {
 		let servicesName = Object.keys(_services);
-
 		servicesName.forEach((name) => {
 			_services[name] && _services[name]._register();
 		})
