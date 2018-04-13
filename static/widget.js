@@ -61,18 +61,26 @@
 			let props = {}
 			let isPublic = true
 
+			const requestDataMap = {
+				getNotifications: {
+					url: 'api/widget/data'
+				}
+			}
+
 			const api = {
 				_requestCache: [],
 				_buildUrl: function(url) {
 					let host = debug ? 'http://localhost:8000/' : 'http://localhost:8000/';
 					return host + url;
 				},
-				_buildRequest: function(name, data) {
+				_buildRequest: function(name, requestData) {
 					var self = this;
 					if (self._requestCache[name]) {
 						log('from cache');
 						return self._requestCache[name];
 					}
+
+					let data = requestDataMap[name] || {};
 
 					data.complete = () => {
 						self._requestCache[name] = null;
@@ -82,11 +90,14 @@
 					data.headers = data.headers || {};
 					data.headers['X-DCG-Notify-Trusted'] = 'true';
 
-					let _data = data.data || sessionData;
+					requestData = requestData || {};
 
-					if (_data) {
-						data.data = `d=${_encode(_data)}`
-					}
+					requestData.d = _encode(sessionData);
+					// if (_data) {
+					// 	data.data = `d=${_encode(_data)}`
+					// }
+
+					data.data = requestData;
 
 					var req = self._requestCache[name] = ajax(data);
 
@@ -98,9 +109,7 @@
 			props = _baseService(props, isPublic)
 
 			props.getNotifications = function getNotifications() {
-				return api._buildRequest('getNotifications', {
-					url: 'api/widget/data'
-				});
+				return api._buildRequest('getNotifications');
 			}
 
 			return props
@@ -395,7 +404,7 @@
 	}
 
 	function _registerAjax() {
-		const type = (ob) => typeof obj;
+		const type = (obj) => typeof obj;
 
 		var jsonpID = 0,
 			key,

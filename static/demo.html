@@ -80,54 +80,58 @@
 
 		<!-- Add any global styles for body, document, etc. -->
 		<style>
-			body {
-				margin: 0;
-				font-family: 'Roboto', 'Noto', sans-serif;
-				line-height: 1.5;
-				min-height: 100vh;
-				background-color: #eeeeee;
+		body {
+			margin: 0;
+			font-family: 'Roboto', 'Noto', sans-serif;
+			line-height: 1.5;
+			min-height: 100vh;
+			background-color: #eeeeee;
+		}
+	</style>
+</head>
+<body>
+	<nav>
+		<ul>
+			<li><a href="" title="">Item 1</a></li>
+			<li><a href="" title="">Item 2</a></li>
+			<li><a href="" title="">Item 3</a></li>
+		</ul>
+	</nav>
+
+	<dcg-notification-summary></dcg-notification-summary>
+
+	<my-app></my-app>
+
+	<noscript>
+		Please enable JavaScript to view this website.
+	</noscript>
+	<!-- Built with love using Polymer Starter Kit -->
+
+	<script>
+		(function(d, c, g, n, o, t, i, f, y) {
+			f = d['DCG'] = d['DCG'] || {};
+			f[o] = f[o] || function() {
+				(f[o].q = f[o].q || []).push(arguments)
+			},
+			t = c.createElement(g),
+			i = c.getElementsByTagName(g)[0];
+			t.async = 1;
+			t.src = n;
+			i.parentNode.insertBefore(t, i)
+		})(window, document, 'script', '//127.0.0.1:3001/static/widget.js', 'notification');
+
+		DCG.debug = true;
+		DCG.notification('create', 'core', {
+			user:{
+				id: 23,
+				name: 'John Doe',
+				email: 'johndoe@foo.com'
+			},
+			metadata: {
+				easy: true,
+				moipv2: true
 			}
-		</style>
-	</head>
-	<body>
-		<nav>
-			<ul>
-				<li><a href="" title="">Item 1</a></li>
-				<li><a href="" title="">Item 2</a></li>
-				<li><a href="" title="">Item 3</a></li>
-			</ul>
-		</nav>
-
-		<dcg-notification-summary></dcg-notification-summary>
-
-		<my-app></my-app>
-
-		<noscript>
-			Please enable JavaScript to view this website.
-		</noscript>
-		<!-- Built with love using Polymer Starter Kit -->
-
-		<script>
-			(function(d, c, g, n, o, t, i, f, y) {
-				f = d['DCG'] = d['DCG'] || {};
-				f[o] = f[o] || function() {
-					(f[o].q = f[o].q || []).push(arguments)
-				},
-				t = c.createElement(g),
-				i = c.getElementsByTagName(g)[0];
-				t.async = 1;
-				t.src = n;
-				i.parentNode.insertBefore(t, i)
-			})(window, document, 'script', '//127.0.0.1:3001/static/widget.js', 'notification');
-
-			DCG.debug = true;
-			DCG.notification('create', 'core', {
-				user:{
-					id: 23,
-					name: 'John Doe',
-					email: 'johndoe@foo.com'
-				}
-			});
-		</script>
-	</body>
-	</html>
+		});
+	</script>
+</body>
+</html>

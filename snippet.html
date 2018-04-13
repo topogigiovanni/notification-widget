@@ -12,9 +12,15 @@
 	})(window, document, 'script', '//jsel.info/static/scripts/jsel.js', 'notification');
 
 	DCG.notification('create', 'core', {
-		id: 23,
-		name: 'John Doe',
-		email: 'johndoe@foo.com'
+		user:{
+			id: 23,
+			name: 'John Doe',
+			email: 'johndoe@foo.com'
+		},
+		metadata: {
+			easy: true,
+			moipv2: true
+		}
 	});
 </script>
 <script>
