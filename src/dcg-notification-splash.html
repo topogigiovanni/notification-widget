@@ -1,0 +1,181 @@
+
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+
+<link rel="import" href="../bower_components/iron-dropdown/iron-dropdown.html">
+
+<!-- <link rel="import" href="../bower_components/app-layout/app-drawer/app-drawer.html">
+<link rel="import" href="../bower_components/app-layout/app-drawer-layout/app-drawer-layout.html">
+<link rel="import" href="../bower_components/app-layout/app-header/app-header.html">
+<link rel="import" href="../bower_components/app-layout/app-header-layout/app-header-layout.html">
+<link rel="import" href="../bower_components/app-layout/app-scroll-effects/app-scroll-effects.html">
+<link rel="import" href="../bower_components/app-layout/app-toolbar/app-toolbar.html">
+<link rel="import" href="../bower_components/app-route/app-location.html">
+<link rel="import" href="../bower_components/app-route/app-route.html">
+<link rel="import" href="../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../bower_components/iron-selector/iron-selector.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="my-icons.html"> -->
+
+<link rel="import" href="app-dropdown.html">
+
+
+<dom-module id="dcg-notification-splash">
+  <template>
+    <style>
+    demo-snippet {
+     --demo-snippet-code: {
+       max-height: 250px;
+     }
+   }
+
+   [slot="dropdown-content"] {
+     background-color: white;
+     line-height: 20px;
+     border-radius: 3px;
+     box-shadow: 0px 2px 6px #ccc;
+   }
+
+   .random-content {
+     padding: 1.5em 2em;
+     max-width: 250px;
+   }
+
+   button {
+     border: 1px solid #ccc;
+     background-color: #eee;
+     padding: 1em;
+     border-radius: 3px;
+     cursor: pointer;
+   }
+
+   button:focus {
+     outline: none;
+     border-color: blue;
+   }
+
+   ul, li {
+     display: block;
+     position: relative;
+     margin: 0;
+     padding: 0;
+   }
+
+   a {
+     display: block;
+     position: relative;
+     padding: 1em;
+     text-decoration: none;
+   }
+
+   li:not(:last-of-type) {
+     border-bottom: 1px solid #eee;
+   }
+
+   a:hover {
+     text-decoration: underline;
+   }
+
+   iron-image {
+     padding: 1em;
+     background-color: #fff;
+     box-shadow: 0px 2px 6px #ccc;
+     border-radius: 3px;
+   }
+ </style>
+
+ <app-dropdown>
+  <button slot="dropdown-trigger">Splash</button>
+  <div slot="dropdown-content" class="random-content">
+   Splash text-- Lorem ipsum dolor sit amet, c esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+ </div>
+</app-dropdown>
+
+</template>
+
+<script>
+  class NotificationSplash extends Polymer.Element {
+    static get is() { return 'dcg-notification-splash'; }
+
+    static get properties() {
+      return {
+        page: {
+          type: String,
+          reflectToAttribute: true,
+          observer: '_pageChanged',
+        },
+        routeData: Object,
+        subroute: String,
+              // This shouldn't be neccessary, but the Analyzer isn't picking up
+              // Polymer.Element#rootPath
+              rootPath: String,
+            };
+          }
+
+          ready() {
+            super.ready()
+
+            console.log('dcg notification ready', DCG, this)
+
+            let service = DCG.notification('getService', 'api')
+
+            service
+            .getNotifications()
+            .then((r) => {
+              console.log('r 1', r);
+
+              return r;
+            })
+            .catch((er) => {
+             console.log('catch err 1', er);
+             return er;
+           })
+
+            service
+            .getNotifications()
+            .then((r) => {
+              console.log('r 2', r);
+
+              return r;
+            })
+            .catch((er) => {
+             console.log('catch err 2', er);
+             return er;
+           })
+
+          }
+
+          static get observers() {
+            return [
+            '_routePageChanged(routeData.page)',
+            ];
+          }
+
+          _routePageChanged(page) {
+        // If no page was found in the route data, page will be an empty string.
+        // Default to 'view1' in that case.
+        this.page = page || 'view1';
+
+        // Close a non-persistent drawer when the page & route are changed.
+        if (!this.$.drawer.persistent) {
+          this.$.drawer.close();
+        }
+      }
+
+      _pageChanged(page) {
+        // Load page import on demand. Show 404 page if fails
+        var resolvedPageUrl = this.resolveUrl('my-' + page + '.html');
+        Polymer.importHref(
+          resolvedPageUrl,
+          null,
+          this._showPage404.bind(this),
+          true);
+      }
+
+      _showPage404() {
+        this.page = 'view404';
+      }
+    }
+
+    window.customElements.define(NotificationSplash.is, NotificationSplash);
+  </script>
+</dom-module>

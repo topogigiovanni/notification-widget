@@ -1,8 +1,17 @@
 
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 
+<link rel="import" href="../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../bower_components/iron-dropdown/iron-dropdown.html">
-
+<link rel="import" href="../bower_components/paper-badge/paper-badge.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../bower_components/iron-icons/social-icons.html">
+<link rel="import" href="../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../bower_components/paper-menu-button/paper-menu-button.html">
+<link rel="import" href="../bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="../bower_components/neon-animation/web-animations.html">
 <!-- <link rel="import" href="../bower_components/app-layout/app-drawer/app-drawer.html">
 <link rel="import" href="../bower_components/app-layout/app-drawer-layout/app-drawer-layout.html">
 <link rel="import" href="../bower_components/app-layout/app-header/app-header.html">
@@ -20,136 +29,259 @@
 
 
 <dom-module id="dcg-notification-summary">
-<template>
-  <style>
-   demo-snippet {
-       --demo-snippet-code: {
-         max-height: 250px;
+  <template>
+    <style>
+    demo-snippet {
+     --demo-snippet-code: {
+       max-height: 250px;
      }
- }
+   }
 
- [slot="dropdown-content"] {
-   background-color: white;
-   line-height: 20px;
-   border-radius: 3px;
-   box-shadow: 0px 2px 6px #ccc;
-}
+   [slot="dropdown-content"] {
+     background-color: white;
+     line-height: 20px;
+     border-radius: 3px;
+     /*box-shadow: 0px 2px 6px #ccc;*/
+   }
 
-.random-content {
-   padding: 1.5em 2em;
-   max-width: 250px;
-}
+   .random-content {
+     /*padding: 1.5em 2em;*/
+     border-bottom: 1px solid #e0e0e0;
+     background-color: white;
+     margin: 0;
+     padding: 16px;
+     background: var(--paper-grey-200);
+     max-width: 250px;
+     /*top: 43px;
+     position: relative;*/
 
-button {
-   border: 1px solid #ccc;
-   background-color: #eee;
-   padding: 1em;
-   border-radius: 3px;
-   cursor: pointer;
-}
+   }
 
-button:focus {
-   outline: none;
-   border-color: blue;
-}
+   /*#dropdown{
+    margin-top: 30px;
+    top: 43px;
+    position: relative;
+    }*/
 
-ul, li {
-   display: block;
-   position: relative;
-   margin: 0;
-   padding: 0;
-}
+    .random-content paper-card{
+      margin-bottom: 10px;
+    }
 
-a {
-   display: block;
-   position: relative;
-   padding: 1em;
-   text-decoration: none;
-}
+    button {
+     border: 1px solid #ccc;
+     background-color: #eee;
+     padding: 1em;
+     border-radius: 3px;
+     cursor: pointer;
+   }
 
-li:not(:last-of-type) {
-   border-bottom: 1px solid #eee;
-}
+   button:focus {
+     outline: none;
+     border-color: blue;
+   }
 
-a:hover {
-   text-decoration: underline;
-}
+   ul, li {
+     display: block;
+     position: relative;
+     margin: 0;
+     padding: 0;
+   }
 
-iron-image {
-   padding: 1em;
-   background-color: #fff;
-   box-shadow: 0px 2px 6px #ccc;
-   border-radius: 3px;
-}
+   a {
+     display: block;
+     position: relative;
+     padding: 1em;
+     text-decoration: none;
+   }
+
+   li:not(:last-of-type) {
+     border-bottom: 1px solid #eee;
+   }
+
+   a:hover {
+     text-decoration: underline;
+   }
+
+   iron-image {
+     padding: 1em;
+     background-color: #fff;
+     box-shadow: 0px 2px 6px #ccc;
+     border-radius: 3px;
+   }
+
+   paper-badge{
+     --paper-badge-background: var(--paper-red-300);
+     --paper-badge-margin-bottom: -20px;
+     --paper-badge-margin-left: -10px;
+   }
+
+   app-dropdown{
+    margin: 0;
+  }
+
+  .dropdown-trigger{
+    margin: 0;
+    padding: 0;
+    position: relative;
+  }
+
+  paper-button {
+    display: block;
+    background: #4285f4;
+    color: #fff;
+  }
+  paper-listbox {
+    display: block;
+  }
+  paper-menu-button {
+    margin: auto;
+  }
+  iron-image {
+    padding: 1em;
+  }
+  .item {
+    max-width: 300px;
+  }
+
+  .random-content paper-menu-button{
+    float: right;
+    margin:0;
+    padding: 0;
+  }
+  .random-content paper-icon-button{
+    margin: 0;
+    padding: 0;
+    width: 20px;
+  }
 </style>
 
 <app-dropdown>
-<button slot="dropdown-trigger">Basic</button>
-<div slot="dropdown-content" class="random-content">
-   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-   in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+  <!-- <div style="display:inline-block" slot="dropdown-trigger" >
+    <paper-icon-button id="number2" icon="social:notifications" alt="inbox">
+    </paper-icon-button>
+    <paper-badge for="number2" label="4" class="red">
+    </paper-badge>
+  </div> -->
+
+  <div class="dropdown-trigger" slot="dropdown-trigger">
+    <paper-icon-button id="number2" icon="social:notifications" alt="inbox">
+    </paper-icon-button>
+    <paper-badge for="number2" label="4" class="red">
+    </paper-badge>
+  </div>
+
+  <!-- <button slot="dropdown-trigger">Basic</button> -->
+  <div slot="dropdown-content" class="random-content">
+    <paper-card alt="Emmental">
+     <div class="card-content">
+      <paper-menu-button horizontal-align="right">
+        <paper-icon-button icon="icons:more-vert" slot="dropdown-trigger" alt="menu"></paper-icon-button>
+        <paper-listbox slot="dropdown-content">
+          <paper-item>alpha</paper-item>
+          <paper-item>beta</paper-item>
+          <paper-item>gamma</paper-item>
+          <paper-item>delta</paper-item>
+          <paper-item>epsilon</paper-item>
+        </paper-listbox>
+      </paper-menu-button>
+      Emmentaler or Emmental is a yellow, medium-hard cheese that originated in the area around Emmental, Switzerland. It is one of the cheeses of Switzerland, and is sometimes known as Swiss cheese.
+    </div>
+
+  </paper-card>
+  <paper-card alt="Emmental">
+   <div class="card-content">
+     Emmentaler or Emmental is a yellow, medium-hard cheese that originated in the area around Emmental, Switzerland. It is one of the cheeses of Switzerland, and is sometimes known as Swiss cheese.
+   </div>
+   <div class="card-actions">
+     <paper-button>Share</paper-button>
+     <paper-button>Explore!</paper-button>
+   </div>
+ </paper-card>
+ <paper-card alt="Emmental">
+   <div class="card-content">
+     Emmentaler or Emmental is a yellow, medium-hard cheese that originated in the area around Emmental, Switzerland. It is one of the cheeses of Switzerland, and is sometimes known as Swiss cheese.
+   </div>
+   <div class="card-actions">
+     <paper-button>Share</paper-button>
+     <paper-button>Explore!</paper-button>
+   </div>
+ </paper-card>
 </div>
 </app-dropdown>
+
+<dcg-notification-splash></dcg-notification-splash>
 
 </template>
 
 <script>
-    class NotificationSummary extends Polymer.Element {
-        static get is() { return 'dcg-notification-summary'; }
+  class NotificationSummary extends Polymer.Element {
+    static get is() { return 'dcg-notification-summary'; }
 
-        static get properties() {
-          return {
-            page: {
-              type: String,
-              reflectToAttribute: true,
-              observer: '_pageChanged',
-          },
-          routeData: Object,
-          subroute: String,
+    static get properties() {
+      return {
+        page: {
+          type: String,
+          reflectToAttribute: true,
+          observer: '_pageChanged',
+        },
+        routeData: Object,
+        subroute: String,
               // This shouldn't be neccessary, but the Analyzer isn't picking up
               // Polymer.Element#rootPath
               rootPath: String,
-          };
-      }
+            };
+          }
 
-      ready() {
-        super.ready();
+          ready() {
+            super.ready()
 
-        console.log('dcg notification ready', DCG, this);
+            console.log('dcg notification ready', DCG, this)
 
-        let service = DCG.notification('getService', 'api');
-        service
-        .getNotifications()
-        .then((r) => {
-            console.log('r 1', r);
-			
-			return r;
-        })
-		.catch((er) => {
-			console.log('catch err 1', er);
-			return er;
-		});
+            let service = DCG.notification('getService', 'api')
 
-        service
-        .getNotifications()
-        .then((r) => {
-            console.log('r 2', r);
-			
-			return r;
-        })
-		.catch((er) => {
-			console.log('catch err 2', er);
-			return er;
-		});
-    }
+            service
+            .getNotifications()
+            .then((r) => {
+              console.log('r 1', r);
 
-    static get observers() {
-        return [
-        '_routePageChanged(routeData.page)',
-        ];
-    }
+              return r;
+            })
+            .catch((er) => {
+             console.log('catch err 1', er);
+             return er;
+           })
 
-    _routePageChanged(page) {
+            service
+            .getNotifications()
+            .then((r) => {
+              console.log('r 2', r);
+
+              return r;
+            })
+            .catch((er) => {
+             console.log('catch err 2', er);
+             return er;
+           })
+
+            // Polymer.import( ['dcg-notification-splash.html'], function() {
+            //   console.log('load spash', arguments)
+            // });
+
+            Polymer.importHref(this.resolveUrl('dcg-notification-splash.html'),
+              () => console.log('success load spash', arguments),
+              () => console.log('error load spash', arguments),
+              true /* true for async */);
+
+          }
+
+          static get observers() {
+            return [
+            '_routePageChanged(routeData.page)',
+            ];
+          }
+
+          _routePageChanged(page) {
         // If no page was found in the route data, page will be an empty string.
         // Default to 'view1' in that case.
         this.page = page || 'view1';
@@ -157,10 +289,10 @@ iron-image {
         // Close a non-persistent drawer when the page & route are changed.
         if (!this.$.drawer.persistent) {
           this.$.drawer.close();
+        }
       }
-  }
 
-  _pageChanged(page) {
+      _pageChanged(page) {
         // Load page import on demand. Show 404 page if fails
         var resolvedPageUrl = this.resolveUrl('my-' + page + '.html');
         Polymer.importHref(
@@ -168,13 +300,13 @@ iron-image {
           null,
           this._showPage404.bind(this),
           true);
-    }
+      }
 
-    _showPage404() {
+      _showPage404() {
         this.page = 'view404';
+      }
     }
-}
 
-window.customElements.define(NotificationSummary.is, NotificationSummary);
-</script>
+    window.customElements.define(NotificationSummary.is, NotificationSummary);
+  </script>
 </dom-module>

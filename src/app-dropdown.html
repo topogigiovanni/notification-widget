@@ -13,71 +13,74 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <!-- <link rel="import" href="../../neon-animation/neon-animations.html">
   <link rel="import" href="grow-height-animation.html"> -->
 
-<dom-module id="app-dropdown">
-  <template>
-    <style>
+  <dom-module id="app-dropdown">
+    <template>
+      <style>
       :host {
         display: inline-block;
         margin: 1em;
       }
+      /*#dropdown{
+        margin-top: 40px;
+        }*/
     </style>
     <div on-tap="open">
       <slot name="dropdown-trigger"></slot>
     </div>
     <iron-dropdown id="dropdown"
-      vertical-align="[[verticalAlign]]"
-      horizontal-align="[[horizontalAlign]]"
-      disabled="[[disabled]]"
-      scroll-action="[[scrollAction]]"
-      open-animation-config="[[openAnimationConfig]]"
-      close-animation-config="[[closeAnimationConfig]]">
-      <slot name="dropdown-content" slot="dropdown-content"></slot>
-    </iron-dropdown>
-  </template>
-  <script>
-    Polymer({
-      is: 'app-dropdown',
+    vertical-align="[[verticalAlign]]"
+    horizontal-align="[[horizontalAlign]]"
+    disabled="[[disabled]]"
+    scroll-action="[[scrollAction]]"
+    open-animation-config="[[openAnimationConfig]]"
+    close-animation-config="[[closeAnimationConfig]]">
+    <slot name="dropdown-content" slot="dropdown-content"></slot>
+  </iron-dropdown>
+</template>
+<script>
+  Polymer({
+    is: 'app-dropdown',
 
-      properties: {
-        verticalAlign: String,
-        horizontalAlign: String,
-        disabled: Boolean,
-        scrollAction: String,
-        openAnimationConfig: {
-          type: Array,
-          value: function() {
-            return [{
-              name: 'fade-in-animation',
-              timing: {
-                delay: 150,
-                duration: 50
-              }
-            }, {
-              name: 'expand-animation',
-              timing: {
-                delay: 150,
-                duration: 200
-              }
-            }];
-          }
-        },
-
-        closeAnimationConfig: {
-          type: Array,
-          value: function() {
-            return [{
-              name: 'fade-out-animation',
-              timing: {
-                duration: 200
-              }
-            }];
-          }
+    properties: {
+      verticalAlign: String,
+      horizontalAlign: String,
+      disabled: Boolean,
+      scrollAction: String,
+      openAnimationConfig: {
+        type: Array,
+        value: function() {
+          return [{
+            name: 'fade-in-animation',
+            timing: {
+              delay: 150,
+              duration: 50
+            }
+          }, {
+            name: 'expand-animation',
+            timing: {
+              delay: 150,
+              duration: 200
+            }
+          }];
         }
       },
 
-      open: function() {
-        this.$.dropdown.open();
+      closeAnimationConfig: {
+        type: Array,
+        value: function() {
+          return [{
+            name: 'fade-out-animation',
+            timing: {
+              duration: 200
+            }
+          }];
+        }
       }
-    });
-  </script>
+    },
+
+    open: function() {
+      this.$.dropdown.open();
+    }
+  });
+</script>
 </dom-module>

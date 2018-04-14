@@ -1,0 +1,106 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<!doctype html>
+<html>
+<head>
+  <title>Load data using iron-scroll-threshold</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=no">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+  <script src="../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+
+  <link rel="import" href="../bower_components/polymer/polymer.html">
+  <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
+  <link rel="import" href="../bower_components/iron-scroll-threshold/iron-scroll-threshold.html">
+  <link rel="import" href="../bower_components/iron-image/iron-image.html">
+  <link rel="import" href="../bower_components/paper-styles/color.html">
+  <link rel="import" href="../bower_components/paper-styles/typography.html">
+  <link rel="import" href="../bower_components/app-layout/app-toolbar/app-toolbar.html">
+  <link rel="import" href="../bower_components/paper-spinner/paper-spinner.html">
+  <link rel="import" href="../bower_components/paper-spinner/paper-spinner-lite.html">
+  <link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+  <link rel="import" href="../bower_components/iron-list/iron-list.html">
+
+  <custom-style>
+    <style is="custom-style">
+
+    html, body {
+      @apply --paper-font-common-base;
+      margin: 0;
+      padding: 0;
+      background-color: #eee;
+    }
+
+  </style>
+</custom-style>
+
+</head>
+<body>
+  <test-component></test-component>
+  <dom-module id="test-component">
+    <template>
+      <style>
+      :host {
+        display: block;
+        height: 100%;
+      }
+      iron-scroll-threshold {
+        height: 100%;
+        overflow: auto;
+      }
+      paper-spinner, paper-spinner-lite {
+        margin: 8px 8px 8px 0;
+      }
+      paper-spinner-lite {
+        --paper-spinner-color: var(--google-yellow-500);
+        --paper-spinner-stroke-width: 6px;
+      }
+    </style>
+    <iron-ajax auto url= "{{url}}"  last-response="{{response}}" loading="{{loadingPeople}}"></iron-ajax>
+    <iron-scroll-threshold id="mytras" on-lower-threshold="loadMoreData" lower-threshold="100" scroll-target="document">
+     <paper-spinner-lite active="{{loadingPeople}}">...</paper-spinner-lite>
+     <paper-spinner-lite active>...</paper-spinner-lite>
+     <template is="dom-repeat" items="{{response.results}}">
+       <span>&nbsp; [[index]] :  [[item.name.first]] [[item.name.last]]</span><br/><br/><br/>
+     </template>
+   </iron-scroll-threshold>
+ </template>
+ <script>
+  class MyTest extends Polymer.Element {
+    static get is() { return 'test-component'; }
+    static get properties() { return {
+      people:{
+        type:Number,
+        value:20
+      }
+    }};
+    static get observers() { return ['_url(people)']}
+    _url(p){
+      console.log(p, this);
+      this.url = "https://randomuser.me/api?results=" + p;
+      setTimeout(()=> {
+        console.log('stout', this);
+        this.$.mytras.clearTriggers();
+      },900)
+    }
+
+    loadMoreData (){
+      console.log("God call me for every scroll");
+      this.people += 10;
+    }
+  }
+  customElements.define(MyTest.is, MyTest);
+</script>
+</dom-module>
+</body>
+</html>

@@ -85,7 +85,11 @@
 			font-family: 'Roboto', 'Noto', sans-serif;
 			line-height: 1.5;
 			min-height: 100vh;
-			background-color: #eeeeee;
+			background-color: #fff;
+		}
+
+		.wrapper{
+			margin: 90px;
 		}
 	</style>
 </head>
@@ -98,8 +102,9 @@
 		</ul>
 	</nav>
 
-	<dcg-notification-summary></dcg-notification-summary>
-
+	<div class="wrapper">
+		<dcg-notification-summary></dcg-notification-summary>
+	</div>
 	<my-app></my-app>
 
 	<noscript>
@@ -132,6 +137,21 @@
 				moipv2: true
 			}
 		});
+	</script>
+
+	<!-- <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script> -->
+	<script>
+		// var OneSignal = window.OneSignal || [];
+		// OneSignal.push(function() {
+		// 	OneSignal.init({
+		// 		allowLocalhostAsSecureOrigin: true,
+		// 		appId: "c82ced51-859a-444f-b9bc-490a4aa446ff",
+		// 		autoRegister: false,
+		// 		notifyButton: {
+		// 			enable: true,
+		// 		},
+		// 	});
+		// });
 	</script>
 </body>
 </html>
