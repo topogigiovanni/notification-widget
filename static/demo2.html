@@ -132,24 +132,23 @@
 		var data = {
 			user:{
 				id: 23,
-				name: 'John Doe',
-				email: 'johndoe@foo.com'
+				name: 'Giovanni Mendes',
+				email: 'gigio@foo.com'
 			},
 			metadata: {
-				storeName: 'demo.com',
+				storeName: 'demo2.com',
 				easy: true,
-				moipv2: true,
-				spacialData: true
+				moipv2: true
 			}
 		};
 		DCG.notification('create', 'core', data);
-		// debugger;
-		var text = 'CORE | ' + JSON.stringify(data);
-		document.getElementById('demo-data').innerHTML = text;
-	</script>
+			// debugger;
+			var text = 'CORE | ' + JSON.stringify(data);
+			document.getElementById('demo-data').innerHTML = text;
+		</script>
 
-	<!-- <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script> -->
-	<script>
+		<!-- <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script> -->
+		<script>
 		// var OneSignal = window.OneSignal || [];
 		// OneSignal.push(function() {
 		// 	OneSignal.init({

@@ -48,9 +48,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     Polymer({
       is: 'app-dropdown',
       ready: function() {
-        console.log('ready', this, this.$)
+        // console.log('ready', this, this.$)
         this.$.dropdown.addEventListener('iron-overlay-closed', e => {this._onClosed(e)});
-
       },
       properties: {
         allowOutsideScroll: Boolean,
@@ -91,21 +90,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
       },
       _onClosed: function() {
-        console.log('iron-overlay-closed', this, arguments)
+        // console.log('iron-overlay-closed', this, arguments)
 
         this.opened = false;
       },
       open: function() {
-        console.log('open', this, arguments, this.$.dropdown)
+        // console.log('open', this, arguments, this.$.dropdown)
 
         this.opened = !!!this.opened;
 
         // this.$.dropdown.toggle()
 
-        if(this.opened)
+        if(this.opened){
           this.$.dropdown.open();
-        else
+        } else{
           this.$.dropdown.close();
+        }
 
       }
     });

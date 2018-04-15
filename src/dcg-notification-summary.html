@@ -257,14 +257,14 @@
            })
 
             service
-            .getNotifications()
+            .getUnreadNotificationsCount()
             .then((r) => {
-              console.log('r 2', r);
+              console.log('r getUnreadNotificationsCount 2', r);
 
               return r;
             })
             .catch((er) => {
-             console.log('catch err 2', er);
+             console.log('catch getUnreadNotificationsCount err 2', er);
              return er;
            })
 

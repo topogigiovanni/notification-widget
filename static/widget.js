@@ -16,20 +16,54 @@
 
 	const noop = () => {}
 	const _actions = {
-		create: (platform, user) => {
+		create: (platform, params) => {
 			if (state.created) {
 				console.error('"create" action already executed')
 				return false
 			}
 
-			state.created = true
+			if (typeof platform !== 'string') {
+				console.error('The first argument of "create" must be a string')
+				return false
+			}
 
-			log('create', platform, user)
+			switch (platform) {
+				case 'core':
+					platform = 'C'
+					break;
+				case 'ez':
+					platform = 'E'
+					break;
+				default:
+					console.error('Invalid platform')
+					return false
+					break;
+			}
+
+			if (typeof params !== 'object') {
+				console.error('The second argument of "create" must be an object')
+				return false
+			}
+
+			if (!params.user || typeof params.user !== 'object') {
+				console.error('"create" action need user param with {id,name,email} properties')
+				return false
+			}
+
+			const user = params.user
+			const metadata = params.metadata || {}
+
+			state.created = true
 
 			sessionData = {
 				platform,
-				user
+				user,
+				metadata
 			}
+
+			log('create', {
+				sessionData
+			})
 
 			return true
 		},
@@ -52,7 +86,7 @@
 			return isPublic
 		}
 
-		context._register = () => {}
+		context._register = noop
 
 		return context
 	}
@@ -63,7 +97,10 @@
 
 			const requestDataMap = {
 				getNotifications: {
-					url: 'api/widget/data'
+					url: 'api/client/data'
+				},
+				getUnreadNotificationsCount: {
+					url: 'api/client/notification/unread/count'
 				}
 			}
 
@@ -110,6 +147,10 @@
 
 			props.getNotifications = function getNotifications() {
 				return api._buildRequest('getNotifications');
+			}
+
+			props.getUnreadNotificationsCount = function getUnreadNotificationsCount() {
+				return api._buildRequest('getUnreadNotificationsCount');
 			}
 
 			return props
