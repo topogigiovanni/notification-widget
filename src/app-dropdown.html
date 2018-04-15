@@ -10,8 +10,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <!-- link rel="import" href="../iron-dropdown.html"-->
 <link rel="import" href="../bower_components/iron-dropdown/iron-dropdown.html">
-<!-- <link rel="import" href="../../neon-animation/neon-animations.html">
-  <link rel="import" href="grow-height-animation.html"> -->
+<link rel="import" href="../bower_components/neon-animation/neon-animations.html">
+<link rel="import" href="grow-height-animation.html">
+<!--   <link rel="import" href="../bower_components/neon-animation/neon-animation.html">
+  <link rel="import" href="../bower_components/neon-animation/neon-animation-behavior.html">
+  <link rel="import" href="../bower_components/neon-animation/neon-shared-element-animation-behavior.html">
+  <link rel="import" href="../bower_components/neon-animation/web-animations.html"> -->
+
 
   <dom-module id="app-dropdown">
     <template>
@@ -20,67 +25,89 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         display: inline-block;
         margin: 1em;
       }
-      /*#dropdown{
+    /*  #dropdown{
         margin-top: 40px;
         }*/
-    </style>
-    <div on-tap="open">
-      <slot name="dropdown-trigger"></slot>
-    </div>
-    <iron-dropdown id="dropdown"
-    vertical-align="[[verticalAlign]]"
-    horizontal-align="[[horizontalAlign]]"
-    disabled="[[disabled]]"
-    scroll-action="[[scrollAction]]"
-    open-animation-config="[[openAnimationConfig]]"
-    close-animation-config="[[closeAnimationConfig]]">
-    <slot name="dropdown-content" slot="dropdown-content"></slot>
-  </iron-dropdown>
-</template>
-<script>
-  Polymer({
-    is: 'app-dropdown',
+      </style>
+      <div on-tap="open">
+        <slot name="dropdown-trigger"></slot>
+      </div>
+      <iron-dropdown id="dropdown"
+      vertical-offset="40"
+      allow-outside-scroll="[[allowOutsideScroll]]"
+      vertical-align="[[verticalAlign]]"
+      horizontal-align="[[horizontalAlign]]"
+      disabled="[[disabled]]"
+      scroll-action="[[scrollAction]]"
+      open-animation-config="[[openAnimationConfig]]"
+      close-animation-config="[[closeAnimationConfig]]">
+      <slot name="dropdown-content" slot="dropdown-content"></slot>
+    </iron-dropdown>
+  </template>
+  <script>
+    Polymer({
+      is: 'app-dropdown',
+      ready: function() {
+        console.log('ready', this, this.$)
+        this.$.dropdown.addEventListener('iron-overlay-closed', e => {this._onClosed(e)});
 
-    properties: {
-      verticalAlign: String,
-      horizontalAlign: String,
-      disabled: Boolean,
-      scrollAction: String,
-      openAnimationConfig: {
-        type: Array,
-        value: function() {
-          return [{
-            name: 'fade-in-animation',
-            timing: {
-              delay: 150,
-              duration: 50
-            }
-          }, {
-            name: 'expand-animation',
-            timing: {
-              delay: 150,
-              duration: 200
-            }
-          }];
+      },
+      properties: {
+        allowOutsideScroll: Boolean,
+        verticalAlign: String,
+        horizontalAlign: String,
+        disabled: Boolean,
+        scrollAction: String,
+        opened: Boolean,
+        openAnimationConfig: {
+          type: Array,
+          value: function() {
+            return [{
+              name: 'fade-in-animation',
+              timing: {
+                delay: 150,
+                duration: 50
+              }
+            }, {
+              name: 'expand-animation',
+              timing: {
+                delay: 150,
+                duration: 200
+              }
+            }];
+          }
+        },
+
+        closeAnimationConfig: {
+          type: Array,
+          value: function() {
+            return [{
+              name: 'fade-out-animation',
+              timing: {
+                duration: 200
+              }
+            }];
+          }
         }
       },
+      _onClosed: function() {
+        console.log('iron-overlay-closed', this, arguments)
 
-      closeAnimationConfig: {
-        type: Array,
-        value: function() {
-          return [{
-            name: 'fade-out-animation',
-            timing: {
-              duration: 200
-            }
-          }];
-        }
+        this.opened = false;
+      },
+      open: function() {
+        console.log('open', this, arguments, this.$.dropdown)
+
+        this.opened = !!!this.opened;
+
+        // this.$.dropdown.toggle()
+
+        if(this.opened)
+          this.$.dropdown.open();
+        else
+          this.$.dropdown.close();
+
       }
-    },
-
-    open: function() {
-      this.$.dropdown.open();
-    }
-  });
-</script>
+    });
+  </script>
 </dom-module>
