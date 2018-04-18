@@ -31,187 +31,192 @@
 <link rel="import" href="my-icons.html"> -->
 
 <link rel="import" href="app-dropdown.html">
-
 <dom-module id="dcg-notification-summary">
-  <template>
-    <style>
-    demo-snippet {
-     --demo-snippet-code: {
-       max-height: 250px;
-     }
-   }
+	<template>
+		<style>
+		demo-snippet {
+			--demo-snippet-code: {
+				max-height: 250px;
+			}
+		}
 
-   [slot="dropdown-content"] {
-     background-color: white;
-     line-height: 20px;
-     border-radius: 3px;
-     /*box-shadow: 0px 2px 6px #ccc;*/
-   }
+		[slot="dropdown-content"] {
+			background-color: white;
+			line-height: 20px;
+			border-radius: 3px;
+			/*box-shadow: 0px 2px 6px #ccc;*/
+		}
 
-   .random-content {
-     /*padding: 1.5em 2em;*/
-     border-bottom: 1px solid #e0e0e0;
-     background-color: white;
-     margin: 0;
-     padding: 16px;
-     background: var(--paper-grey-200);
-     max-width: 250px;
-     /*top: 43px;
-     position: relative;*/
+		.random-content {
+			/*padding: 1.5em 2em;*/
+			border-bottom: 1px solid #e0e0e0;
+			background-color: white;
+			margin: 0;
+			padding: 16px;
+			background: var(--paper-grey-200);
+				max-width: 250px;
+				/*top: 43px;
+				position: relative;*/
+			}
 
-   }
 
-   /*#dropdown{
-    margin-top: 30px;
-    top: 43px;
-    position: relative;
-    }*/
+			/*#dropdown{
+			    margin-top: 30px;
+			    top: 43px;
+			    position: relative;
+			    }*/
 
-    .random-content paper-card{
-      margin-bottom: 10px;
-    }
+			    .random-content paper-card {
+			    	margin-bottom: 10px;
+			    }
 
-    button {
-     border: 1px solid #ccc;
-     background-color: #eee;
-     padding: 1em;
-     border-radius: 3px;
-     cursor: pointer;
-   }
+			    button {
+			    	border: 1px solid #ccc;
+			    	background-color: #eee;
+			    	padding: 1em;
+			    	border-radius: 3px;
+			    	cursor: pointer;
+			    }
 
-   button:focus {
-     outline: none;
-     border-color: blue;
-   }
+			    button:focus {
+			    	outline: none;
+			    	border-color: blue;
+			    }
 
-   ul, li {
-     display: block;
-     position: relative;
-     margin: 0;
-     padding: 0;
-   }
+			    ul,
+			    li {
+			    	display: block;
+			    	position: relative;
+			    	margin: 0;
+			    	padding: 0;
+			    }
 
-   a {
-     display: block;
-     position: relative;
-     padding: 1em;
-     text-decoration: none;
-   }
+			    a {
+			    	display: block;
+			    	position: relative;
+			    	padding: 1em;
+			    	text-decoration: none;
+			    }
 
-   li:not(:last-of-type) {
-     border-bottom: 1px solid #eee;
-   }
+			    li:not(:last-of-type) {
+			    	border-bottom: 1px solid #eee;
+			    }
 
-   a:hover {
-     text-decoration: underline;
-   }
+			    a:hover {
+			    	text-decoration: underline;
+			    }
 
-   iron-image {
-     padding: 1em;
-     background-color: #fff;
-     box-shadow: 0px 2px 6px #ccc;
-     border-radius: 3px;
-   }
+			    iron-image {
+			    	padding: 1em;
+			    	background-color: #fff;
+			    	box-shadow: 0px 2px 6px #ccc;
+			    	border-radius: 3px;
+			    }
 
-   paper-badge{
-     --paper-badge-background: var(--paper-red-300);
-     --paper-badge-margin-bottom: -20px;
-     --paper-badge-margin-left: -10px;
-   }
+			    paper-badge {
+			    	--paper-badge-background: var(--paper-red-300);
+			    		--paper-badge-margin-bottom: -20px;
+			    		--paper-badge-margin-left: -10px;
+			    	}
 
-   app-dropdown{
-    margin: 0;
-  }
+			    	app-dropdown {
+			    		margin: 0;
+			    	}
 
-  .dropdown-trigger{
-    margin: 0;
-    padding: 0;
-    position: relative;
-  }
+			    	.dropdown-trigger {
+			    		margin: 0;
+			    		padding: 0;
+			    		position: relative;
+			    	}
 
-  paper-button {
-    display: block;
-    background: #4285f4;
-    color: #fff;
-  }
-  paper-listbox {
-    display: block;
-  }
-  paper-menu-button {
-    margin: auto;
-  }
-  iron-image {
-    padding: 1em;
-  }
-  .item {
-    max-width: 300px;
-  }
+			    	paper-button {
+			    		display: block;
+			    		background: #4285f4;
+			    		color: #fff;
+			    	}
 
-  .random-content paper-menu-button{
-    float: right;
-    margin:0;
-    padding: 0;
-  }
-  .random-content paper-icon-button{
-    margin: 0;
-    padding: 0;
-    width: 20px;
-  }
-</style>
+			    	paper-listbox {
+			    		display: block;
+			    	}
 
-<app-dropdown allow-outside-scroll="true">
+			    	paper-menu-button {
+			    		margin: auto;
+			    	}
 
-  <!-- <div style="display:inline-block" slot="dropdown-trigger" >
-    <paper-icon-button id="number2" icon="social:notifications" alt="inbox">
-    </paper-icon-button>
-    <paper-badge for="number2" label="4" class="red">
-    </paper-badge>
-  </div> -->
+			    	iron-image {
+			    		padding: 1em;
+			    	}
 
-  <div class="dropdown-trigger" slot="dropdown-trigger">
-    <paper-icon-button id="number2" icon="social:notifications" alt="inbox">
-    </paper-icon-button>
-    <paper-badge for="number2" label="4" class="red">
-    </paper-badge>
-  </div>
+			    	.item {
+			    		max-width: 300px;
+			    	}
 
-  <!-- <button slot="dropdown-trigger">Basic</button> -->
-  <div slot="dropdown-content" class="random-content">
-    <paper-card alt="Emmental">
-     <div class="card-content">
-      <paper-menu-button horizontal-align="right">
-        <paper-icon-button icon="icons:more-vert" slot="dropdown-trigger" alt="menu"></paper-icon-button>
-        <paper-listbox slot="dropdown-content">
-          <paper-item>alpha</paper-item>
-          <paper-item>beta</paper-item>
-          <paper-item>gamma</paper-item>
-          <paper-item>delta</paper-item>
-          <paper-item>epsilon</paper-item>
-        </paper-listbox>
-      </paper-menu-button>
-      Emmentaler or Emmental is a yellow, medium-hard cheese that originated in the area around Emmental, Switzerland. It is one of the cheeses of Switzerland, and is sometimes known as Swiss cheese.
-    </div>
+			    	.random-content paper-menu-button {
+			    		float: right;
+			    		margin: 0;
+			    		padding: 0;
+			    	}
 
-  </paper-card>
-  <paper-card alt="Emmental">
-   <div class="card-content">
-     Emmentaler or Emmental is a yellow, medium-hard cheese that originated in the area around Emmental, Switzerland. It is one of the cheeses of Switzerland, and is sometimes known as Swiss cheese.
-   </div>
-   <div class="card-actions">
-     <paper-button>Share</paper-button>
-     <paper-button>Explore!</paper-button>
-   </div>
- </paper-card>
- <paper-card alt="Emmental">
-   <div class="card-content">
-     Emmentaler or Emmental is a yellow, medium-hard cheese that originated in the area around Emmental, Switzerland. It is one of the cheeses of Switzerland, and is sometimes known as Swiss cheese.
-   </div>
-   <div class="card-actions">
-     <paper-button>Share</paper-button>
-     <paper-button>Explore!</paper-button>
-   </div>
- </paper-card>
-</div>
+			    	.random-content paper-icon-button {
+			    		margin: 0;
+			    		padding: 0;
+			    		width: 20px;
+			    	}
+			    </style>
+
+			    <app-dropdown allow-outside-scroll="true">
+
+	  <!-- <div style="display:inline-block" slot="dropdown-trigger" >
+	    <paper-icon-button id="number2" icon="social:notifications" alt="inbox">
+	    </paper-icon-button>
+	    <paper-badge for="number2" label="4" class="red">
+	    </paper-badge>
+	</div> -->
+
+	<div class="dropdown-trigger" slot="dropdown-trigger">
+		<paper-icon-button id="number2" icon="social:notifications" alt="inbox">
+		</paper-icon-button>
+		<paper-badge for="number2" label="[[notificationsCount]]" class="red">
+		</paper-badge>
+	</div>
+
+	<!-- <button slot="dropdown-trigger">Basic</button> -->
+	<div slot="dropdown-content" class="random-content">
+		<paper-card alt="Emmental">
+			<div class="card-content">
+				<paper-menu-button horizontal-align="right">
+					<paper-icon-button icon="icons:more-vert" slot="dropdown-trigger" alt="menu"></paper-icon-button>
+					<paper-listbox slot="dropdown-content">
+						<paper-item>alpha</paper-item>
+						<paper-item>beta</paper-item>
+						<paper-item>gamma</paper-item>
+						<paper-item>delta</paper-item>
+						<paper-item>epsilon</paper-item>
+					</paper-listbox>
+				</paper-menu-button>
+				Emmentaler or Emmental is a yellow, medium-hard cheese that originated in the area around Emmental, Switzerland. It is one of the cheeses of Switzerland, and is sometimes known as Swiss cheese.
+			</div>
+
+		</paper-card>
+		<paper-card alt="Emmental">
+			<div class="card-content">
+				Emmentaler or Emmental is a yellow, medium-hard cheese that originated in the area around Emmental, Switzerland. It is one of the cheeses of Switzerland, and is sometimes known as Swiss cheese.
+			</div>
+			<div class="card-actions">
+				<paper-button>Share</paper-button>
+				<paper-button>Explore!</paper-button>
+			</div>
+		</paper-card>
+		<paper-card alt="Emmental">
+			<div class="card-content">
+				Emmentaler or Emmental is a yellow, medium-hard cheese that originated in the area around Emmental, Switzerland. It is one of the cheeses of Switzerland, and is sometimes known as Swiss cheese.
+			</div>
+			<div class="card-actions">
+				<paper-button>Share</paper-button>
+				<paper-button>Explore!</paper-button>
+			</div>
+		</paper-card>
+	</div>
 </app-dropdown>
 
 <dcg-notification-splash></dcg-notification-splash>
@@ -219,98 +224,90 @@
 </template>
 
 <script>
-  class NotificationSummary extends Polymer.Element {
-    static get is() { return 'dcg-notification-summary'; }
+	class NotificationSummary extends Polymer.Element {
+		static get is() {
+			return 'dcg-notification-summary';
+		}
 
-    static get properties() {
-      return {
-        page: {
-          type: String,
-          reflectToAttribute: true,
-          observer: '_pageChanged',
-        },
-        routeData: Object,
-        subroute: String,
-              // This shouldn't be neccessary, but the Analyzer isn't picking up
-              // Polymer.Element#rootPath
-              rootPath: String,
-            };
-          }
+		static get properties() {
+			return {
+				page: {
+					type: String,
+					reflectToAttribute: true,
+					observer: '_pageChanged',
+				},
+				routeData: Object,
+				subroute: String,
+	            // This shouldn't be neccessary, but the Analyzer isn't picking up
+	            // Polymer.Element#rootPath
+	            rootPath: String,
+	            notificationsCount: {
+	            	type: Number,
+	            	default: 0
+	            }
+	        };
+	    }
 
-          ready() {
-            super.ready()
+	    ready() {
+	    	super.ready()
 
-            console.log('dcg notification ready', DCG, this)
+	    	console.log('dcg notification ready', DCG, this)
 
-            let service = DCG.notification('getService', 'api')
+	    	let service = DCG.notification('getService', 'api')
 
-            service
-            .getNotifications()
-            .then((r) => {
-              console.log('r 1', r);
+	    	service
+	    	.getNotifications()
+	    	.then((r) => {
+	    		console.log('r 1', r);
 
-              return r;
-            })
-            .catch((er) => {
-             console.log('catch err 1', er);
-             return er;
-           })
+	    		return r;
+	    	})
+	    	.catch((er) => {
+	    		console.log('catch err 1', er);
+	    		return er;
+	    	})
 
-            service
-            .getUnreadNotificationsCount()
-            .then((r) => {
-              console.log('r getUnreadNotificationsCount 2', r);
+	    	service
+	    	.getUnreadNotificationsCount()
+	    	.then((r) => {
+	    		console.log('r getUnreadNotificationsCount 2', r);
+	    		this.notificationsCount = r.count;
+	    		return r;
+	    	})
+	    	.catch((er) => {
+	    		console.log('catch getUnreadNotificationsCount err 2', er);
+	    		return er;
+	    	})
 
-              return r;
-            })
-            .catch((er) => {
-             console.log('catch getUnreadNotificationsCount err 2', er);
-             return er;
-           })
+	        // Polymer.import( ['dcg-notification-splash.html'], function() {
+	        //   console.log('load spash', arguments)
+	        // });
 
-            // Polymer.import( ['dcg-notification-splash.html'], function() {
-            //   console.log('load spash', arguments)
-            // });
+	        Polymer.importHref(this.resolveUrl('dcg-notification-splash.html'),
+	        	() => console.log('success load spash', arguments),
+	        	() => console.log('error load spash', arguments),
+	        	true /* true for async */ );
 
-            Polymer.importHref(this.resolveUrl('dcg-notification-splash.html'),
-              () => console.log('success load spash', arguments),
-              () => console.log('error load spash', arguments),
-              true /* true for async */);
+	    }
 
-          }
+	    static get observers() {
+	    	return [
+	    	'_routePageChanged(routeData.page)',
+	    	];
+	    }
 
-          static get observers() {
-            return [
-            '_routePageChanged(routeData.page)',
-            ];
-          }
+	    _routePageChanged(page) {
+	        // If no page was found in the route data, page will be an empty string.
+	        // Default to 'view1' in that case.
+	        this.page = page || 'view1';
 
-          _routePageChanged(page) {
-        // If no page was found in the route data, page will be an empty string.
-        // Default to 'view1' in that case.
-        this.page = page || 'view1';
+	        // Close a non-persistent drawer when the page & route are changed.
+	        if (!this.$.drawer.persistent) {
+	        	this.$.drawer.close();
+	        }
+	    }
+	}
 
-        // Close a non-persistent drawer when the page & route are changed.
-        if (!this.$.drawer.persistent) {
-          this.$.drawer.close();
-        }
-      }
-
-      _pageChanged(page) {
-        // Load page import on demand. Show 404 page if fails
-        var resolvedPageUrl = this.resolveUrl('my-' + page + '.html');
-        Polymer.importHref(
-          resolvedPageUrl,
-          null,
-          this._showPage404.bind(this),
-          true);
-      }
-
-      _showPage404() {
-        this.page = 'view404';
-      }
-    }
-
-    window.customElements.define(NotificationSummary.is, NotificationSummary);
-  </script>
+	window.customElements.define(NotificationSummary.is, NotificationSummary);
+</script>
 </dom-module>
