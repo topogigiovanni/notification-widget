@@ -12,6 +12,11 @@
 <link rel="import" href="../bower_components/paper-menu-button/paper-menu-button.html">
 <link rel="import" href="../bower_components/paper-listbox/paper-listbox.html">
 
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../bower_components/iron-scroll-threshold/iron-scroll-threshold.html">
+<link rel="import" href="../bower_components/paper-spinner/paper-spinner.html">
+<link rel="import" href="../bower_components/paper-spinner/paper-spinner-lite.html">
+
 <link rel="import" href="../bower_components/neon-animation/neon-animation.html">
 <link rel="import" href="../bower_components/neon-animation/neon-animation-behavior.html">
 <link rel="import" href="../bower_components/neon-animation/neon-shared-element-animation-behavior.html">
@@ -31,6 +36,7 @@
 <link rel="import" href="my-icons.html"> -->
 
 <link rel="import" href="app-dropdown.html">
+
 <dom-module id="dcg-notification-summary">
 	<template>
 		<style>
@@ -181,41 +187,29 @@
 	</div>
 
 	<!-- <button slot="dropdown-trigger">Basic</button> -->
-	<div slot="dropdown-content" class="random-content">
-		<paper-card alt="Emmental">
-			<div class="card-content">
-				<paper-menu-button horizontal-align="right">
-					<paper-icon-button icon="icons:more-vert" slot="dropdown-trigger" alt="menu"></paper-icon-button>
-					<paper-listbox slot="dropdown-content">
-						<paper-item>alpha</paper-item>
-						<paper-item>beta</paper-item>
-						<paper-item>gamma</paper-item>
-						<paper-item>delta</paper-item>
-						<paper-item>epsilon</paper-item>
-					</paper-listbox>
-				</paper-menu-button>
-				Emmentaler or Emmental is a yellow, medium-hard cheese that originated in the area around Emmental, Switzerland. It is one of the cheeses of Switzerland, and is sometimes known as Swiss cheese.
-			</div>
-
-		</paper-card>
-		<paper-card alt="Emmental">
-			<div class="card-content">
-				Emmentaler or Emmental is a yellow, medium-hard cheese that originated in the area around Emmental, Switzerland. It is one of the cheeses of Switzerland, and is sometimes known as Swiss cheese.
-			</div>
-			<div class="card-actions">
-				<paper-button>Share</paper-button>
-				<paper-button>Explore!</paper-button>
-			</div>
-		</paper-card>
-		<paper-card alt="Emmental">
-			<div class="card-content">
-				Emmentaler or Emmental is a yellow, medium-hard cheese that originated in the area around Emmental, Switzerland. It is one of the cheeses of Switzerland, and is sometimes known as Swiss cheese.
-			</div>
-			<div class="card-actions">
-				<paper-button>Share</paper-button>
-				<paper-button>Explore!</paper-button>
-			</div>
-		</paper-card>
+	<div id="notification-list" slot="dropdown-content" class="random-content">
+		<iron-scroll-threshold id="mytras" on-lower-threshold="loadMoreData" lower-threshold="40" scroll-target="notification-list">
+			<template is="dom-repeat" items="{{list}}">
+				<paper-card alt="Emmental">
+					<div class="card-content">
+						<paper-menu-button horizontal-align="right">
+							<paper-icon-button icon="icons:more-vert" slot="dropdown-trigger" alt="menu"></paper-icon-button>
+							<paper-listbox slot="dropdown-content">
+								<paper-item>alpha</paper-item>
+								<paper-item>beta</paper-item>
+								<paper-item>gamma</paper-item>
+								<paper-item>delta</paper-item>
+								<paper-item>epsilon</paper-item>
+							</paper-listbox>
+						</paper-menu-button>
+						[[item.title]]
+						<br>
+						[[item.message]]
+					</div>
+				</paper-card>
+			</template>
+			<paper-spinner-lite active="{{loadingData}}">...</paper-spinner-lite>
+		</iron-scroll-threshold>
 	</div>
 </app-dropdown>
 
@@ -231,53 +225,46 @@
 
 		static get properties() {
 			return {
-				page: {
-					type: String,
-					reflectToAttribute: true,
-					observer: '_pageChanged',
+				notificationsCount: {
+					type: Number,
+					value: 0
 				},
-				routeData: Object,
-				subroute: String,
-	            // This shouldn't be neccessary, but the Analyzer isn't picking up
-	            // Polymer.Element#rootPath
-	            rootPath: String,
-	            notificationsCount: {
-	            	type: Number,
-	            	default: 0
-	            }
-	        };
-	    }
+				loadedData: {
+					type: Number,
+					value: 0
+				},
+				lastLoadedData: {
+					type: Number,
+					value: 0
+				},
+				list: {
+					type: Array,
+					value: []
+				},
+				loadingData: Boolean,
+				finishedLoad: Boolean,
+				service: Object
+			};
+		}
 
-	    ready() {
-	    	super.ready()
+		ready() {
+			super.ready()
 
-	    	console.log('dcg notification ready', DCG, this)
+			console.log('dcg notification ready', DCG, this)
 
-	    	let service = DCG.notification('getService', 'api')
+			let service = DCG.notification('getService', 'api')
 
-	    	service
-	    	.getNotifications()
-	    	.then((r) => {
-	    		console.log('r 1', r);
-
-	    		return r;
-	    	})
-	    	.catch((er) => {
-	    		console.log('catch err 1', er);
-	    		return er;
-	    	})
-
-	    	service
-	    	.getUnreadNotificationsCount()
-	    	.then((r) => {
-	    		console.log('r getUnreadNotificationsCount 2', r);
-	    		this.notificationsCount = r.count;
-	    		return r;
-	    	})
-	    	.catch((er) => {
-	    		console.log('catch getUnreadNotificationsCount err 2', er);
-	    		return er;
-	    	})
+			service
+			.getUnreadNotificationsCount()
+			.then((r) => {
+				console.log('r getUnreadNotificationsCount 2', r);
+				this.notificationsCount = r.count;
+				return r;
+			})
+			.catch((er) => {
+				console.log('catch getUnreadNotificationsCount err 2', er);
+				return er;
+			})
 
 	        // Polymer.import( ['dcg-notification-splash.html'], function() {
 	        //   console.log('load spash', arguments)
@@ -292,19 +279,61 @@
 
 	    static get observers() {
 	    	return [
-	    	'_routePageChanged(routeData.page)',
+	    	'_url(loadedData)'
 	    	];
 	    }
 
-	    _routePageChanged(page) {
-	        // If no page was found in the route data, page will be an empty string.
-	        // Default to 'view1' in that case.
-	        this.page = page || 'view1';
+	    _url(skip){
+	    	console.log('_url ------- skip:', skip, this);
+	    	// this.url = "https://randomuser.me/api?results=" + p;
+	    	// setTimeout(()=> {
+	    	// 	console.log('stout', this);
+	    	// 	this.$.mytras.clearTriggers();
+	    	// },900)
 
-	        // Close a non-persistent drawer when the page & route are changed.
-	        if (!this.$.drawer.persistent) {
-	        	this.$.drawer.close();
-	        }
+	    	if(this.finishedLoad || (this.lastLoadedData > 0 && skip <= this.lastLoadedData)){
+	    		this.loadingData = false
+	    		return
+	    	}
+
+	    	this.lastLoadedData = skip
+
+	    	let service = DCG.notification('getService', 'api')
+
+	    	service
+	    	.getNotifications(skip)
+	    	.then((r) => {
+	    		console.log('r 1', r);
+	    		// debugger;
+	    		if(r && r.length){
+	    			//this.list = this.list || []
+	    			// this.list = this.get('list') || []
+	    			r.forEach((i) => this.push('list', i))
+
+	    			// this.set('list', this.list)
+
+	    		}else{
+	    			this.finishedLoad = true;
+	    		}
+
+	    		console.log('this.list ', this.list );
+
+	    		this.$.mytras.clearTriggers()
+	    		this.loadingData = false
+
+	    		//return r;
+	    	})
+	    	.catch((er) => {
+	    		console.log('catch err 1', er);
+	    		return er;
+	    	})
+	    }
+
+	    loadMoreData (){
+	    	console.log("God call me for every scroll");
+	    	this.loadingData = true;
+	    	// this.loaded += 10;
+	    	this.loadedData += 3;
 	    }
 	}
 

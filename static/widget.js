@@ -97,7 +97,7 @@
 
 			const requestDataMap = {
 				getNotifications: {
-					url: 'api/client/data'
+					url: 'api/client/notification/list'
 				},
 				getUnreadNotificationsCount: {
 					url: 'api/client/notification/unread/count'
@@ -110,14 +110,15 @@
 					let host = debug ? 'http://localhost:8000/' : 'http://localhost:8000/';
 					return host + url;
 				},
-				_buildRequest: function(name, requestData) {
-					var self = this;
+				_buildRequest: function(requestName, requestData) {
+					let self = this;
+					let name = requestName + (typeof requestData === 'object' ? JSON.stringify(requestData) : requestData || '');
 					if (self._requestCache[name]) {
 						log('from cache');
 						return self._requestCache[name];
 					}
 
-					let data = requestDataMap[name] || {};
+					let data = Object.assign({}, requestDataMap[requestName] || {});
 
 					data.complete = () => {
 						self._requestCache[name] = null;
@@ -145,8 +146,10 @@
 			// public
 			props = _baseService(props, isPublic)
 
-			props.getNotifications = function getNotifications() {
-				return api._buildRequest('getNotifications');
+			props.getNotifications = function getNotifications(skip) {
+				return api._buildRequest('getNotifications', {
+					skip
+				});
 			}
 
 			props.getUnreadNotificationsCount = function getUnreadNotificationsCount() {
