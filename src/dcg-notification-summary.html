@@ -231,11 +231,11 @@
 									<div class="action-wrapper">
 										<template is="dom-if" if="{{item.isNew}}">
 											<paper-icon-button on-click="markAsRead" id$="notification_action_ready{{item._id}}" icon="image:brightness-1" alt="menu"></paper-icon-button>
-											<paper-tooltip for$="notification_action_ready{{item._id}}" offset="0">Marcar como visualizado</paper-tooltip>
+											<paper-tooltip position="left" animation-delay="20" for$="notification_action_ready{{item._id}}" offset="0">Marcar como visualizado</paper-tooltip>
 										</template>
 										<template is="dom-if" if="{{!item.isNew}}">
 											<paper-icon-button on-click="markAsUnRead" id$="notification_action_unread{{item._id}}" icon="image:adjust" alt="menu"></paper-icon-button>
-											<paper-tooltip for$="notification_action_unread{{item._id}}" offset="0">Marcar como não visualizado</paper-tooltip>
+											<paper-tooltip position="left" animation-delay="20" for$="notification_action_unread{{item._id}}" offset="0">Marcar como não visualizado</paper-tooltip>
 										</template>
 									</div>
 									[[item.itemsIndex]]
@@ -296,10 +296,6 @@
 
 					console.log('dcg notification ready', DCG, this, this.$)
 
-					// let service = DCG.notification('getService', 'api')
-
-					// this.$.DCGService = service
-
 					let service = this.DCGService
 
 					service
@@ -334,7 +330,6 @@
 
 	    getKindIcon(item) {
 	    	const kindMap = this._getKindMap()
-	    	console.log('kinf item', item, kindMap);
 
 	    	const kind = kindMap[item.kind] || kindMap.Default
 	    	return kind.icon || kind.icon
@@ -351,10 +346,11 @@
 	    }
 
 	    markAsRead(e) {
-	    	console.log('markAsRead', e, this.DCGService)
 	    	let item = e.model.item;
 
 	    	e.model.set('item.isNew', false)
+
+	    	this.notificationsCount = this.notificationsCount - 1;
 
 	    	this
 	    	.DCGService
@@ -362,10 +358,15 @@
 	    }
 
 	    markAsUnRead(e) {
-	    	console.log('markAsUnRead', e, this.DCGService)
 	    	let item = e.model.item;
 
 	    	e.model.set('item.isNew', true)
+
+	    	this.notificationsCount = this.notificationsCount + 1;
+
+	    	this
+	    	.DCGService
+	    	.setNotificationAsUnRead(item._id)
 	    }
 
 	    _getKindMap() {

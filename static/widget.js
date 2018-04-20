@@ -105,6 +105,10 @@
 				setNotificationAsRead: {
 					url: 'api/client/notification/set/read',
 					type: 'POST'
+				},
+				setNotificationAsUnRead: {
+					url: 'api/client/notification/set/unread',
+					type: 'POST'
 				}
 			}
 
@@ -153,17 +157,23 @@
 			props.getNotifications = function getNotifications(skip) {
 				return api._buildRequest('getNotifications', {
 					skip
-				});
+				})
 			}
 
 			props.getUnreadNotificationsCount = function getUnreadNotificationsCount() {
-				return api._buildRequest('getUnreadNotificationsCount');
+				return api._buildRequest('getUnreadNotificationsCount')
 			}
 
 			props.setNotificationAsRead = function setNotificationAsRead(id) {
 				return api._buildRequest('setNotificationAsRead', {
 					id
-				});
+				})
+			}
+
+			props.setNotificationAsUnRead = function setNotificationAsUnRead(id) {
+				return api._buildRequest('setNotificationAsUnRead', {
+					id
+				})
 			}
 
 			return props
