@@ -101,6 +101,10 @@
 				},
 				getUnreadNotificationsCount: {
 					url: 'api/client/notification/unread/count'
+				},
+				setNotificationAsRead: {
+					url: 'api/client/notification/set/read',
+					type: 'POST'
 				}
 			}
 
@@ -154,6 +158,12 @@
 
 			props.getUnreadNotificationsCount = function getUnreadNotificationsCount() {
 				return api._buildRequest('getUnreadNotificationsCount');
+			}
+
+			props.setNotificationAsRead = function setNotificationAsRead(id) {
+				return api._buildRequest('setNotificationAsRead', {
+					id
+				});
 			}
 
 			return props
