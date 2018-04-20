@@ -9,6 +9,7 @@
 <link rel="import" href="../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="../bower_components/iron-icons/social-icons.html">
 <link rel="import" href="../bower_components/iron-icons/image-icons.html">
+<link rel="import" href="../bower_components/iron-icons/editor-icons.html">
 <link rel="import" href="../bower_components/iron-icons/av-icons.html">
 <link rel="import" href="../bower_components/paper-card/paper-card.html">
 <link rel="import" href="../bower_components/paper-menu-button/paper-menu-button.html">
@@ -193,13 +194,14 @@
 			}
 
 			.kind-icon.alert {
-				color: #c52525;
+				color: #d0cc1f;
 			}
 
 			.notification-card{
 				width: 100%;
 				background: #6666661a;
 				word-wrap: break-word;
+				cursor: pointer;
 			}
 
 			.notification-card.is-new{
@@ -212,6 +214,15 @@
 
 			.empty-list-message{
 				color: #ccc;
+			}
+
+			paper-spinner-lite{
+				margin: 0 auto;
+				display: block;
+			}
+
+			#notification-list{
+				min-width: 250px;
 			}
 		</style>
 
@@ -226,11 +237,10 @@
 				</template>
 			</div>
 
-			<!-- <button slot="dropdown-trigger">Basic</button> -->
 			<div id="notification-list" slot="dropdown-content" class="random-content">
 				<iron-scroll-threshold id="mytras" on-lower-threshold="loadMoreData" lower-threshold="40" scroll-target="notification-list">
 					<template is="dom-repeat" items="{{list}}" indexAs="index">
-						<paper-card class$="notification-card {{getReadStateClass(item.isNew)}}">
+						<paper-card class$="notification-card {{getReadStateClass(item.isNew)}}" on-click="showContent">
 							<div class="card-content">
 								<iron-icon class$="{{getKindIconClass(item)}}" icon="[[getKindIcon(item)]]"></iron-icon>
 								<div class="action-wrapper">
@@ -243,7 +253,6 @@
 										<paper-tooltip position="left" animation-delay="20" for$="notification_action_unread{{item._id}}" offset="0">Marcar como não visualizado</paper-tooltip>
 									</template>
 								</div>
-								[[item.itemsIndex]]
 								[[item.title]]
 								<br>
 								[[item.message]]
@@ -353,8 +362,13 @@
 	    	return isNew ? 'is-new' : '';
 	    }
 
+	    showContent(e) {
+	    	let item = e.model.item
+	    	console.log('show content item', item)
+	    }
+
 	    markAsRead(e) {
-	    	let item = e.model.item;
+	    	let item = e.model.item
 
 	    	e.model.set('item.isNew', false)
 
