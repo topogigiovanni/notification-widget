@@ -42,10 +42,11 @@
 					value: false,
 					notify: true
 				},
-				content: {
+				modelContent: {
 					type: String,
-					observer: '_contentChanged'
-					//notify: true,
+					reflectToAttribute: true,
+					observer: '_contentChanged',
+					notify: true
 				},
 				icon: {
 					type: String,
@@ -58,6 +59,7 @@
 			},
 			_contentChanged(newVal, oldVal) {
 				console.log('_contentChanged', newVal, this.$)
+				this.$['off-canvas-content'].innerHTML = newVal
 			}
 		});
 	</script>

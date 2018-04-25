@@ -9,54 +9,54 @@
 
 		<style>
 
-		#close-dialog {
-			width: 40px;
-			height: 40px;
-			position: absolute;
-			left: -16px;
-			top: -16px;
-			background: white;
-			border: 1px solid #ededed;
-			border-radius: 50%;
-			padding: 0;
-			margin: 0;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			cursor: pointer;
-			box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
-		}
-	</style>
+			#close-dialog {
+				width: 40px;
+				height: 40px;
+				position: absolute;
+				left: -16px;
+				top: -16px;
+				background: white;
+				border: 1px solid #ededed;
+				border-radius: 50%;
+				padding: 0;
+				margin: 0;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				cursor: pointer;
+				box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+			}
+		</style>
 
-	<paper-button raised on-click="openModal">modal dialog</paper-button>
+		<paper-button raised on-click="openModal">modal dialog</paper-button>
 
 
-	<paper-dialog id="splash" modal>
-		<div id="close-dialog">
-			<paper-icon-button dialog-dismiss icon="icons:close" alt="inbox">
-			</paper-icon-button>
-		</div>
-		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-		<div class="buttons">
-			<paper-button dialog-confirm autofocus>Tap me to close</paper-button>
-		</div>
-	</paper-dialog>
+		<paper-dialog id="splash" modal>
+			<div id="close-dialog">
+				<paper-icon-button dialog-dismiss icon="icons:close" alt="inbox">
+				</paper-icon-button>
+			</div>
+			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+			<div class="buttons">
+				<paper-button dialog-confirm autofocus>Tap me to close</paper-button>
+			</div>
+		</paper-dialog>
 
-</template>
+	</template>
 
-<script>
-	class NotificationSplash extends Polymer.Element {
-		static get is() { return 'dcg-notification-splash'; }
+	<script>
+		class NotificationSplash extends Polymer.Element {
+			static get is() { return 'dcg-notification-splash'; }
 
-		static get properties() {
-			return {
-				page: {
-					type: String,
-					reflectToAttribute: true,
-					observer: '_pageChanged',
-				},
-				routeData: Object,
-				subroute: String,
+			static get properties() {
+				return {
+					page: {
+						type: String,
+						reflectToAttribute: true,
+						observer: '_pageChanged',
+					},
+					routeData: Object,
+					subroute: String,
                   // This shouldn't be neccessary, but the Analyzer isn't picking up
                   // Polymer.Element#rootPath
                   rootPath: String,
@@ -66,12 +66,12 @@
           ready() {
           	super.ready()
 
+          	this.TYPE = 'S'
+
           	let $notification = this.$notification = document.querySelector('dcg-notification-summary')
           	this.service = $notification.DCGService
 
           	$notification.addEventListener('notificationSummaryClicked', this.onNotificationSummaryClicked)
-
-          	let service = DCG.notification('getService', 'api')
 
                //  service
                //  .getNotifications()

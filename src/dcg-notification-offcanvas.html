@@ -10,8 +10,7 @@
 
 		<paper-button raised on-click="openCanvas">off canvas</paper-button>
 
-		<app-offcanvas opened="{{opened}}" content="{{content}}">
-		</app-offcanvas>
+		<app-offcanvas align="left" opened="{{opened}}" model-content="{{content}}"></app-offcanvas>
 
 	</template>
 
@@ -23,10 +22,11 @@
 				return {
 					opened: {
 						type: Boolean,
-						value: true
+						value: false
 					},
 					content: {
 						type: String,
+						reflectToAttribute: true,
 						value: ''
 					}
 				}
@@ -35,47 +35,31 @@
 			ready() {
 				super.ready()
 
+				this.TYPE = 'D'
+
 				let $notification = this.$notification = document.querySelector('dcg-notification-summary')
 				this.service = $notification.DCGService
 
-				$notification.addEventListener('notificationSummaryClicked', this.onNotificationSummaryClicked)
+				$notification.addEventListener('notificationSummaryClicked', this.onNotificationSummaryClicked.bind(this))
+			}
 
-				let service = DCG.notification('getService', 'api')
+			onNotificationSummaryClicked(e) {
+				console.log('onNotificationSummaryClicked at offcanvas', e, this.$)
+				let item= e.detail.item
+				if(!item || item.type !== this.TYPE) return;
 
-               //  service
-               //  .getNotifications()
-               //  .then((r) => {
-               //    console.log('r 1', r);
+				this.service.getNotificationContent(item._id)
+				.then((r)=>{
+					console.log('r', r)
+					if(r && r.content){
+						this.set('content', r.content)
+						this.opened = true
+					}
+				})
 
-               //    return r;
-               //  })
-               //  .catch((er) => {
-               //   console.log('catch err 1', er);
-               //   return er;
-               // })
-
-               //  service
-               //  .getNotifications()
-               //  .then((r) => {
-               //    console.log('r 2', r);
-
-               //    return r;
-               //  })
-               //  .catch((er) => {
-               //   console.log('catch err 2', er);
-               //   return er;
-               // })
-
-           }
-
-           onNotificationSummaryClicked(e) {
-           	console.log('onNotificationSummaryClicked at offcanvas', e)
-           	let item= e.detail.item
-           	if(!item) return;
-
-           	this.content = item.message
-           	this.set('content', item.message)
-           	this.opened = true
+           	// this.content = item.message
+           	// this.set('content', item.message)
+           	// this.opened = true
            }
            openCanvas() {
            	this.opened = !this.opened

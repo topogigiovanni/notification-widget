@@ -99,6 +99,9 @@
 				getNotifications: {
 					url: 'api/client/notification/list'
 				},
+				getNotificationContent: {
+					url: 'api/client/notification/content'
+				},
 				getUnreadNotificationsCount: {
 					url: 'api/client/notification/unread/count'
 				},
@@ -157,6 +160,12 @@
 			props.getNotifications = function getNotifications(skip) {
 				return api._buildRequest('getNotifications', {
 					skip
+				})
+			}
+
+			props.getNotificationContent = function getNotificationContent(id) {
+				return api._buildRequest('getNotificationContent', {
+					id
 				})
 			}
 
