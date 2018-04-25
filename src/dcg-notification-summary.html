@@ -45,21 +45,21 @@
 	<template>
 		<style>
 
-			[slot="dropdown-content"] {
-				background-color: white;
-				line-height: 20px;
-				border-radius: 3px;
-				/*box-shadow: 0px 2px 6px #ccc;*/
-			}
+		[slot="dropdown-content"] {
+			background-color: white;
+			line-height: 20px;
+			border-radius: 3px;
+			/*box-shadow: 0px 2px 6px #ccc;*/
+		}
 
-			.random-content {
-				/*padding: 1.5em 2em;*/
-				border-bottom: 1px solid #e0e0e0;
-				background-color: white;
-				margin: 0;
-				padding: 16px;
-				background: var(--paper-grey-200);
-				max-width: 250px;
+		.random-content {
+			/*padding: 1.5em 2em;*/
+			border-bottom: 1px solid #e0e0e0;
+			background-color: white;
+			margin: 0;
+			padding: 16px;
+			background: var(--paper-grey-200);
+			max-width: 250px;
 				/*top: 43px;
 				position: relative;*/
 			}
@@ -69,348 +69,349 @@
 			    margin-top: 30px;
 			    top: 43px;
 			    position: relative;
-			}*/
+			    }*/
 
-			.random-content paper-card {
-				margin-bottom: 10px;
-			}
+			    .random-content paper-card {
+			    	margin-bottom: 10px;
+			    }
 
-			button {
-				border: 1px solid #ccc;
-				background-color: #eee;
-				padding: 1em;
-				border-radius: 3px;
-				cursor: pointer;
-			}
+			    button {
+			    	border: 1px solid #ccc;
+			    	background-color: #eee;
+			    	padding: 1em;
+			    	border-radius: 3px;
+			    	cursor: pointer;
+			    }
 
-			button:focus {
-				outline: none;
-				border-color: blue;
-			}
+			    button:focus {
+			    	outline: none;
+			    	border-color: blue;
+			    }
 
-			ul,
-			li {
-				display: block;
-				position: relative;
-				margin: 0;
-				padding: 0;
-			}
+			    ul,
+			    li {
+			    	display: block;
+			    	position: relative;
+			    	margin: 0;
+			    	padding: 0;
+			    }
 
-			a {
-				display: block;
-				position: relative;
-				padding: 1em;
-				text-decoration: none;
-			}
+			    a {
+			    	display: block;
+			    	position: relative;
+			    	padding: 1em;
+			    	text-decoration: none;
+			    }
 
-			li:not(:last-of-type) {
-				border-bottom: 1px solid #eee;
-			}
+			    li:not(:last-of-type) {
+			    	border-bottom: 1px solid #eee;
+			    }
 
-			a:hover {
-				text-decoration: underline;
-			}
+			    a:hover {
+			    	text-decoration: underline;
+			    }
 
-			iron-image {
-				padding: 1em;
-				background-color: #fff;
-				box-shadow: 0px 2px 6px #ccc;
-				border-radius: 3px;
-			}
+			    iron-image {
+			    	padding: 1em;
+			    	background-color: #fff;
+			    	box-shadow: 0px 2px 6px #ccc;
+			    	border-radius: 3px;
+			    }
 
-			paper-badge {
-				--paper-badge-background: var(--paper-red-300);
-				--paper-badge-margin-bottom: -20px;
-				--paper-badge-margin-left: -10px;
-			}
+			    paper-badge {
+			    	--paper-badge-background: var(--paper-red-300);
+			    	--paper-badge-margin-bottom: -20px;
+			    	--paper-badge-margin-left: -10px;
+			    }
 
-			app-dropdown {
-				margin: 0;
-			}
+			    app-dropdown {
+			    	margin: 0;
+			    }
 
-			.dropdown-trigger {
-				margin: 0;
-				padding: 0;
-				position: relative;
-			}
+			    .dropdown-trigger {
+			    	margin: 0;
+			    	padding: 0;
+			    	position: relative;
+			    }
 
-			paper-button {
-				display: block;
-				background: #4285f4;
-				color: #fff;
-			}
+			    paper-button {
+			    	display: block;
+			    	background: #4285f4;
+			    	color: #fff;
+			    }
 
-			paper-listbox {
-				display: block;
-			}
+			    paper-listbox {
+			    	display: block;
+			    }
 
-			paper-menu-button {
-				margin: auto;
-			}
+			    paper-menu-button {
+			    	margin: auto;
+			    }
 
-			iron-image {
-				padding: 1em;
-			}
+			    iron-image {
+			    	padding: 1em;
+			    }
 
-			.item {
-				max-width: 300px;
-			}
+			    .item {
+			    	max-width: 300px;
+			    }
 
-			.random-content paper-menu-button {
-				float: right;
-				margin: 0;
-				padding: 0;
-			}
+			    .random-content paper-menu-button {
+			    	float: right;
+			    	margin: 0;
+			    	padding: 0;
+			    }
 
-			.random-content paper-icon-button {
-				margin: 0;
-				padding: 0;
-				width: 20px;
-			}
+			    .random-content paper-icon-button {
+			    	margin: 0;
+			    	padding: 0;
+			    	width: 20px;
+			    }
 
-			.action-wrapper {
-				float: right;
-				visibility: hidden;
-			}
+			    .action-wrapper {
+			    	float: right;
+			    	visibility: hidden;
+			    }
 
-			.action-wrapper paper-icon-button {
-				margin: 0;
-				padding: 0;
-				width: 12px;
-				height: 12px;
-				color: #a9a9a9;
-			}
+			    .action-wrapper paper-icon-button {
+			    	margin: 0;
+			    	padding: 0;
+			    	width: 12px;
+			    	height: 12px;
+			    	color: #a9a9a9;
+			    }
 
-			.kind-icon {
-				width: 18px;
-			}
+			    .kind-icon {
+			    	width: 18px;
+			    }
 
-			.kind-icon.notice {
-				color: hsla(222, 100%, 57%, 0.7803921568627451);
-			}
+			    .kind-icon.notice {
+			    	color: hsla(222, 100%, 57%, 0.7803921568627451);
+			    }
 
-			.kind-icon.billing {
-				color: #249224;
-			}
+			    .kind-icon.billing {
+			    	color: #249224;
+			    }
 
-			.kind-icon.alert {
-				color: #d0cc1f;
-			}
+			    .kind-icon.alert {
+			    	color: #d0cc1f;
+			    }
 
-			.notification-card{
-				width: 100%;
-				background: #6666661a;
-				word-wrap: break-word;
-				cursor: pointer;
-			}
+			    .notification-card{
+			    	width: 100%;
+			    	background: #6666661a;
+			    	word-wrap: break-word;
+			    	cursor: pointer;
+			    }
 
-			.notification-card.is-new{
-				background: #fff;
-			}
+			    .notification-card.is-new{
+			    	background: #fff;
+			    }
 
-			.notification-card:hover .action-wrapper{
-				visibility: visible;
-			}
+			    .notification-card:hover .action-wrapper{
+			    	visibility: visible;
+			    }
 
-			.empty-list-message{
-				color: #ccc;
-			}
+			    .empty-list-message{
+			    	color: #ccc;
+			    }
 
-			paper-spinner-lite{
-				margin: 0 auto;
-				display: block;
-			}
+			    paper-spinner-lite{
+			    	margin: 0 auto;
+			    	display: block;
+			    }
 
-			#notification-list{
-				min-width: 250px;
-			}
-		</style>
+			    #notification-list{
+			    	min-width: 250px;
+			    }
+			</style>
 
-		<app-dropdown allow-outside-scroll="true">
+			<app-dropdown allow-outside-scroll="true">
 
-			<div class="dropdown-trigger" slot="dropdown-trigger">
-				<paper-icon-button id="number2" icon="social:notifications" alt="inbox">
-				</paper-icon-button>
-				<template is="dom-if" if="{{notificationsCount}}">
-					<paper-badge for="number2" label="[[notificationsCount]]" class="red">
-					</paper-badge>
-				</template>
-			</div>
+				<div class="dropdown-trigger" slot="dropdown-trigger">
+					<paper-icon-button id="number2" icon="social:notifications" alt="inbox">
+					</paper-icon-button>
+					<template is="dom-if" if="{{notificationsCount}}">
+						<paper-badge for="number2" label="[[notificationsCount]]" class="red">
+						</paper-badge>
+					</template>
+				</div>
 
-			<div id="notification-list" slot="dropdown-content" class="random-content">
-				<iron-scroll-threshold id="mytras" on-lower-threshold="loadMoreData" lower-threshold="40" scroll-target="notification-list">
-					<template is="dom-repeat" items="{{list}}" indexAs="index">
-						<paper-card class$="notification-card {{getReadStateClass(item.isNew)}}" on-click="showContent">
-							<div class="card-content">
-								<iron-icon class$="{{getKindIconClass(item)}}" icon="[[getKindIcon(item)]]"></iron-icon>
-								<div class="action-wrapper">
-									<template is="dom-if" if="{{item.isNew}}">
-										<paper-icon-button on-click="markAsRead" id$="notification_action_ready{{item._id}}" icon="image:brightness-1" alt="menu"></paper-icon-button>
-										<paper-tooltip position="left" animation-delay="20" for$="notification_action_ready{{item._id}}" offset="0">Marcar como visualizado</paper-tooltip>
-									</template>
-									<template is="dom-if" if="{{!item.isNew}}">
-										<paper-icon-button on-click="markAsUnRead" id$="notification_action_unread{{item._id}}" icon="image:adjust" alt="menu"></paper-icon-button>
-										<paper-tooltip position="left" animation-delay="20" for$="notification_action_unread{{item._id}}" offset="0">Marcar como não visualizado</paper-tooltip>
-									</template>
+				<div id="notification-list" slot="dropdown-content" class="random-content">
+					<iron-scroll-threshold id="mytras" on-lower-threshold="loadMoreData" lower-threshold="40" scroll-target="notification-list">
+						<template is="dom-repeat" items="{{list}}" indexAs="index">
+							<paper-card class$="notification-card {{getReadStateClass(item.isNew)}}" on-click="showContent">
+								<div class="card-content">
+									<iron-icon class$="{{getKindIconClass(item)}}" icon="[[getKindIcon(item)]]"></iron-icon>
+									<div class="action-wrapper">
+										<template is="dom-if" if="{{item.isNew}}">
+											<paper-icon-button on-click="markAsRead" id$="notification_action_ready{{item._id}}" icon="image:brightness-1" alt="menu"></paper-icon-button>
+											<paper-tooltip position="left" animation-delay="20" for$="notification_action_ready{{item._id}}" offset="0">Marcar como visualizado</paper-tooltip>
+										</template>
+										<template is="dom-if" if="{{!item.isNew}}">
+											<paper-icon-button on-click="markAsUnRead" id$="notification_action_unread{{item._id}}" icon="image:adjust" alt="menu"></paper-icon-button>
+											<paper-tooltip position="left" animation-delay="20" for$="notification_action_unread{{item._id}}" offset="0">Marcar como não visualizado</paper-tooltip>
+										</template>
+									</div>
+									[[item.title]]
+									<br>
+									[[item.message]]
 								</div>
-								[[item.title]]
-								<br>
-								[[item.message]]
-							</div>
-						</paper-card>
-					</template>
-					<template is="dom-if" if="{{!list.length}}">
-						<span class="empty-list-message">Sem notificações</span>
-					</template>
-					<paper-spinner-lite active="{{loadingData}}">...</paper-spinner-lite>
-				</iron-scroll-threshold>
-			</div>
-		</app-dropdown>
+							</paper-card>
+						</template>
+						<template is="dom-if" if="{{!list.length}}">
+							<span class="empty-list-message">Sem notificações</span>
+						</template>
+						<paper-spinner-lite active="{{loadingData}}">...</paper-spinner-lite>
+					</iron-scroll-threshold>
+				</div>
+			</app-dropdown>
 
-		<dcg-notification-splash></dcg-notification-splash>
+			<dcg-notification-splash></dcg-notification-splash>
 
-	</template>
+		</template>
 
-	<script>
-		class NotificationSummary extends Polymer.Element {
-			static get is() {
-				return 'dcg-notification-summary';
-			}
+		<script>
+			class NotificationSummary extends Polymer.Element {
+				static get is() {
+					return 'dcg-notification-summary';
+				}
 
-			static get properties() {
-				return {
-					notificationsCount: {
-						type: Number,
-						value: 0
-					},
-					loadedData: {
-						type: Number,
-						value: 0
-					},
-					lastLoadedData: {
-						type: Number,
-						value: 0
-					},
-					list: {
-						type: Array,
-						value: []
-					},
-					loadingData: Boolean,
-					finishedLoad: Boolean
-				};
-			}
+				static get properties() {
+					return {
+						notificationsCount: {
+							type: Number,
+							value: 0
+						},
+						loadedData: {
+							type: Number,
+							value: 0
+						},
+						lastLoadedData: {
+							type: Number,
+							value: 0
+						},
+						list: {
+							type: Array,
+							value: []
+						},
+						loadingData: Boolean,
+						finishedLoad: Boolean
+					};
+				}
 
-			constructor() {
-				super()
+				constructor() {
+					super()
 
-				let service = DCG.notification('getService', 'api')
+					let service = DCG.notification('getService', 'api')
 
-				this.DCGService = service
-			}
+					this.DCGService = service
+				}
 
-			ready() {
-				super.ready()
+				ready() {
+					super.ready()
 
-				console.log('dcg notification ready', DCG, this, this.$)
+					console.log('dcg notification ready', DCG, this, this.$)
 
-				let service = this.DCGService
+					let service = this.DCGService
 
-				service
-				.getUnreadNotificationsCount()
-				.then((r) => {
+					service
+					.getUnreadNotificationsCount()
+					.then((r) => {
 					//console.log('r count!!!!!!', r);
 					this.notificationsCount = r.count
 
 					return r
 				})
-				.catch((er) => {
-					console.error('catch getUnreadNotificationsCount err 2', er)
-					return er
-				})
+					.catch((er) => {
+						console.error('catch getUnreadNotificationsCount err 2', er)
+						return er
+					})
 
-	        // Polymer.import( ['dcg-notification-splash.html'], function() {
-	        //   console.log('load spash', arguments)
-	        // });
+					this.loadWidgets()
 
-	        Polymer.importHref(this.resolveUrl('dcg-notification-splash.html'),
-	        	() => console.log('success load spash', arguments),
-	        	() => console.log('error load spash', arguments),
-	        	true /* true for async */ );
+				}
 
-	    }
+				static get observers() {
+					return [
+					'_url(loadedData)'
+					];
+				}
 
-	    static get observers() {
-	    	return [
-	    	'_url(loadedData)'
-	    	];
-	    }
+				loadWidgets() {
+					Polymer.importHref(this.resolveUrl('dcg-notification-splash.html'),
+						() => console.log('success load spash', arguments),
+						() => console.log('error load spash', arguments),
+						true /* true for async */ );
+				}
 
-	    getKindIcon(item) {
-	    	const kindMap = this._getKindMap()
+				getKindIcon(item) {
+					const kindMap = this._getKindMap()
 
-	    	const kind = kindMap[item.kind] || kindMap.Default
-	    	return kind.icon || kind.icon
-	    }
+					const kind = kindMap[item.kind] || kindMap.Default
+					return kind.icon || kind.icon
+				}
 
-	    getKindIconClass(item) {
-	    	const kindMap = this._getKindMap()
-	    	const kind = kindMap[item.kind] || kindMap.Default
-	    	return 'kind-icon ' + kind.cls || kind.cls
-	    }
+				getKindIconClass(item) {
+					const kindMap = this._getKindMap()
+					const kind = kindMap[item.kind] || kindMap.Default
+					return 'kind-icon ' + kind.cls || kind.cls
+				}
 
-	    getReadStateClass(isNew) {
-	    	return isNew ? 'is-new' : '';
-	    }
+				getReadStateClass(isNew) {
+					return isNew ? 'is-new' : '';
+				}
 
-	    showContent(e) {
-	    	let item = e.model.item
-	    	console.log('show content item', item)
-	    }
+				showContent(e) {
+					let item = e.model.item
+					console.log('show content item', item)
+					this.dispatchEvent(new CustomEvent('notificationSummaryClicked', {detail: {item}}))
+				}
 
-	    markAsRead(e) {
-	    	let item = e.model.item
+				markAsRead(e) {
+					let item = e.model.item
 
-	    	e.model.set('item.isNew', false)
+					e.model.set('item.isNew', false)
 
-	    	this.notificationsCount = this.notificationsCount - 1;
+					this.notificationsCount = this.notificationsCount - 1;
 
-	    	this.DCGService
-	    	.setNotificationAsRead(item._id)
-	    }
+					this.DCGService
+					.setNotificationAsRead(item._id)
+				}
 
-	    markAsUnRead(e) {
-	    	let item = e.model.item;
+				markAsUnRead(e) {
+					let item = e.model.item;
 
-	    	e.model.set('item.isNew', true)
+					e.model.set('item.isNew', true)
 
-	    	this.notificationsCount = this.notificationsCount + 1;
+					this.notificationsCount = this.notificationsCount + 1;
 
-	    	this.DCGService
-	    	.setNotificationAsUnRead(item._id)
-	    }
+					this.DCGService
+					.setNotificationAsUnRead(item._id)
+				}
 
-	    _getKindMap() {
-	    	return {
-	    		N: {
-	    			icon: 'av:new-releases',
-	    			cls: 'notice'
-	    		},
-	    		B: {
-	    			icon: 'editor:monetization-on',
-	    			cls: 'billing'
-	    		},
-	    		A: {
-	    			icon: 'icons:report-problem',
-	    			cls: 'alert'
-	    		},
-	    		Default: {
-	    			icon: 'av:new-releases',
-	    			cls: 'notice'
-	    		}
-	    	}
-	    }
-	    _url(skip){
-	    	console.log('_url ------- skip:', skip, this, this.$);
+				_getKindMap() {
+					return {
+						N: {
+							icon: 'av:new-releases',
+							cls: 'notice'
+						},
+						B: {
+							icon: 'editor:monetization-on',
+							cls: 'billing'
+						},
+						A: {
+							icon: 'icons:report-problem',
+							cls: 'alert'
+						},
+						Default: {
+							icon: 'av:new-releases',
+							cls: 'notice'
+						}
+					}
+				}
+				_url(skip){
+					console.log('_url ------- skip:', skip, this, this.$);
 	    	// this.url = "https://randomuser.me/api?results=" + p;
 	    	// setTimeout(()=> {
 	    	// 	console.log('stout', this);

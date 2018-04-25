@@ -31,7 +31,8 @@
     "web-animations-js": "^2.3.1",
     "paper-item": "^2.1.1",
     "paper-button": "^2.1.0",
-    "paper-tooltip": "^2.1.1"
+    "paper-tooltip": "^2.1.1",
+    "paper-dialog": "^2.1.1"
   },
   "resolutions": {
     "polymer": "^2.0.0"
