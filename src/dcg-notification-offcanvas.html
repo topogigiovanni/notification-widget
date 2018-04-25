@@ -1,0 +1,87 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="app-offcanvas.html">
+
+<dom-module id="dcg-notification-offcanvas">
+	<template>
+
+		<style>
+
+		</style>
+
+		<paper-button raised on-click="openCanvas">off canvas</paper-button>
+
+		<app-offcanvas opened="{{opened}}" content="[[content]]">
+		</app-offcanvas>
+
+	</template>
+
+	<script>
+		class NotificationOffCanvas extends Polymer.Element {
+			static get is() { return 'dcg-notification-offcanvas'; }
+
+			static get properties() {
+				return {
+					opened: {
+						type: Boolean,
+						value: true
+					},
+					content: {
+						type: String,
+						value: ''
+					}
+				}
+			}
+
+			ready() {
+				super.ready()
+
+				let $notification = this.$notification = document.querySelector('dcg-notification-summary')
+				this.service = $notification.DCGService
+
+				$notification.addEventListener('notificationSummaryClicked', this.onNotificationSummaryClicked)
+
+				let service = DCG.notification('getService', 'api')
+
+               //  service
+               //  .getNotifications()
+               //  .then((r) => {
+               //    console.log('r 1', r);
+
+               //    return r;
+               //  })
+               //  .catch((er) => {
+               //   console.log('catch err 1', er);
+               //   return er;
+               // })
+
+               //  service
+               //  .getNotifications()
+               //  .then((r) => {
+               //    console.log('r 2', r);
+
+               //    return r;
+               //  })
+               //  .catch((er) => {
+               //   console.log('catch err 2', er);
+               //   return er;
+               // })
+
+           }
+
+           onNotificationSummaryClicked(e) {
+           	console.log('onNotificationSummaryClicked at offcanvas', e)
+           	let item= e.detail.item
+           	if(!item) return;
+
+           	this.content = item.message
+           	this.set('content', item.message)
+           	this.opened = true
+           }
+           openCanvas() {
+           	this.opened = !this.opened
+           }
+       }
+
+       window.customElements.define(NotificationOffCanvas.is, NotificationOffCanvas);
+   </script>
+</dom-module>

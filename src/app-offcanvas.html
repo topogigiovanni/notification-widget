@@ -1,0 +1,64 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/app-layout/app-layout.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+
+<!-- https://github.com/LRNWebComponents/lrndesign-drawer/blob/master/lrndesign-drawer.html -->
+
+<dom-module id="app-offcanvas">
+	<template>
+		<style>
+			:host {
+				display: block;
+				--app-offcanvas-width: 30%;
+			}
+			app-header {
+				z-index: 100;
+			}
+			app-drawer {
+				--app-drawer-width: var(--app-offcanvas-width);
+				--app-drawer-content-container: {
+					padding: 1em;
+					overflow-y: scroll;
+					margin-top: 7em;
+				}
+			}
+		</style>
+		<app-header>
+			<app-drawer opened="{{opened}}" align="{{align}}">
+				<div id="off-canvas-content">
+				</div>
+			</app-drawer>
+		</app-header>
+
+	</template>
+
+	<script>
+		Polymer({
+			is: 'app-offcanvas',
+			properties: {
+				opened: {
+					type: Boolean,
+					value: false,
+					notify: true
+				},
+				content: {
+					type: String,
+					observer: '_contentChanged'
+					//notify: true,
+				},
+				icon: {
+					type: String,
+					value: 'icon'
+				},
+				align: {
+					type: String,
+					value: 'left'
+				}
+			},
+			_contentChanged(newVal, oldVal) {
+				console.log('_contentChanged', newVal, this.$)
+			}
+		});
+	</script>
+</dom-module>
