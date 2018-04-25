@@ -145,9 +145,9 @@
 
 					data.data = requestData;
 
-					var req = self._requestCache[name] = ajax(data);
+					self._requestCache[name] = ajax(data);
 
-					return req;
+					return self._requestCache[name];
 				}
 			};
 
@@ -293,9 +293,10 @@
 	}
 
 	function _buildUrl(url) {
+		// TODO - Alterar para URL de PRD
 		let host = debug ? 'http://localhost:3001/' : 'http://localhost:3001/';
 
-		return host + url;
+		return host + url
 	}
 
 	function _polyfills() {
@@ -464,7 +465,7 @@
 			}
 		}
 
-		Deferred = _Deferred;
+		Deferred = _Deferred
 	}
 
 	function _registerAjax() {
