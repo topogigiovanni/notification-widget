@@ -66,11 +66,10 @@
           ready() {
           	super.ready()
 
-          	let $notification = document.querySelector('dcg-notification-summary')
+          	let $notification = this.$notification = document.querySelector('dcg-notification-summary')
+          	this.service = $notification.DCGService
 
           	$notification.addEventListener('notificationSummaryClicked', this.onNotificationSummaryClicked)
-
-          	console.log('this.$', this.$)
 
           	let service = DCG.notification('getService', 'api')
 
