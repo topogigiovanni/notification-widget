@@ -105,6 +105,9 @@
 				getUnreadNotificationsCount: {
 					url: 'api/client/notification/unread/count'
 				},
+				getSplashList: {
+					url: 'api/client/splash/list'
+				},
 				setNotificationAsRead: {
 					url: 'api/client/notification/set/read',
 					type: 'POST'
@@ -171,6 +174,10 @@
 
 			props.getUnreadNotificationsCount = function getUnreadNotificationsCount() {
 				return api._buildRequest('getUnreadNotificationsCount')
+			}
+
+			props.getSplashList = function getSplashList() {
+				return api._buildRequest('getSplashList')
 			}
 
 			props.setNotificationAsRead = function setNotificationAsRead(id) {
