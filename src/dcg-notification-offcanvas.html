@@ -40,6 +40,8 @@
 				let $notification = this.$notification = document.querySelector('dcg-notification-summary')
 				this.service = $notification.DCGService
 
+				this.fetchNews()
+
 				$notification.addEventListener('notificationSummaryClicked', this.onNotificationSummaryClicked.bind(this))
 			}
 
@@ -64,8 +66,39 @@
            openCanvas() {
            	this.opened = !this.opened
            }
-       }
 
-       window.customElements.define(NotificationOffCanvas.is, NotificationOffCanvas);
-   </script>
+           sendSetAsRead(item) {
+				// this.dispatchEvent(new CustomEvent('setAsRead', {detail: {item: item}}));
+				this.$notification.setItemAsRead.bind(this.$notification)(item)
+			}
+
+			fetchContentAndOpen(item) {
+				this.service.getNotificationContent(item._id)
+				.then((r)=>{
+					console.log('r', r)
+					if(r && r.content){
+						if(item.isNew){
+							setTimeout(()=>{
+								this.sendSetAsRead(item)
+							}, 400)
+						}
+						this.set('content', r.content)
+						this.opened = true
+					}
+				})
+			}
+
+			fetchNews() {
+				this.service
+				.getSideList()
+				.then((r) => {
+					if(r && r.length){
+						this.fetchContentAndOpen(r[0])
+					}
+				})
+			}
+		}
+
+		window.customElements.define(NotificationOffCanvas.is, NotificationOffCanvas);
+	</script>
 </dom-module>

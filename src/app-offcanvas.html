@@ -23,9 +23,20 @@
 					margin-top: 7em;
 				}
 			}
+			#close-side {
+				float: left;
+				margin-right: 20px;
+			}
+			#off-canvas-content{
+				margin-top: 30px;
+			}
 		</style>
 		<app-header>
 			<app-drawer opened="{{opened}}" align="{{align}}">
+				<div id="close-side">
+					<paper-icon-button on-click="close" icon="icons:close" alt="fechar">
+					</paper-icon-button>
+				</div>
 				<div id="off-canvas-content">
 				</div>
 			</app-drawer>
@@ -60,6 +71,9 @@
 			_contentChanged(newVal, oldVal) {
 				console.log('_contentChanged', newVal, this.$)
 				this.$['off-canvas-content'].innerHTML = newVal
+			},
+			close() {
+				this.opened = false
 			}
 		});
 	</script>

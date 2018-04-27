@@ -108,6 +108,9 @@
 				getSplashList: {
 					url: 'api/client/splash/list'
 				},
+				getSideList: {
+					url: 'api/client/side/list'
+				},
 				setNotificationAsRead: {
 					url: 'api/client/notification/set/read',
 					type: 'POST'
@@ -120,6 +123,7 @@
 
 			const api = {
 				_requestCache: [],
+				_responseCache: [],
 				_buildUrl: function(url) {
 					let host = debug ? 'http://localhost:8000/' : 'http://localhost:8000/';
 					return host + url;
@@ -167,9 +171,22 @@
 			}
 
 			props.getNotificationContent = function getNotificationContent(id) {
-				return api._buildRequest('getNotificationContent', {
-					id
-				})
+				let requestName = 'getNotificationContent'
+				let cacheKey = `${requestName}|${id}`
+
+				if (api._responseCache[cacheKey]) {
+					let deferred = new Deferred();
+					deferred.resolve(api._responseCache[cacheKey])
+					return deferred.promise;
+				}
+
+				return api._buildRequest(requestName, {
+						id
+					})
+					.then((r) => {
+						api._responseCache[cacheKey] = r
+						return r
+					})
 			}
 
 			props.getUnreadNotificationsCount = function getUnreadNotificationsCount() {
@@ -178,6 +195,10 @@
 
 			props.getSplashList = function getSplashList() {
 				return api._buildRequest('getSplashList')
+			}
+
+			props.getSideList = function getSideList() {
+				return api._buildRequest('getSideList')
 			}
 
 			props.setNotificationAsRead = function setNotificationAsRead(id) {
